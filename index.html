@@ -639,59 +639,62 @@
   @media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; row-gap: 48px; } }
   @media (max-width: 540px) { .steps { grid-template-columns: 1fr; } }
 
-  /* ============ BENEFITS ============ */
+  /* ============ BENEFITS (horizontal, compact) ============ */
   .benefits-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 980px;
+    margin: 0 auto;
   }
   .benefit {
     background: white;
-    border-radius: var(--radius-lg);
-    padding: 36px 28px;
-    border: 2.5px solid var(--ink);
-    box-shadow: 0 6px 0 0 var(--ink);
-    transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
-    position: relative;
-    overflow: hidden;
-  }
-  .benefit::before {
-    content: "";
-    position: absolute; inset: -40% -40% auto auto;
-    width: 200px; height: 200px; border-radius: 50%;
-    opacity: .15;
-    pointer-events: none;
-    transition: transform 600ms var(--ease-out);
-  }
-  .benefit:hover { transform: translateY(-6px); box-shadow: 0 12px 0 0 var(--ink); }
-  .benefit:hover::before { transform: scale(1.4); }
-  .benefit:hover .benefit-icon { transform: rotate(-6deg) scale(1.05); }
-  .benefit-icon {
-    width: 96px; height: 96px;
-    border-radius: 26px;
-    display: grid; place-items: center;
-    margin-bottom: 24px;
+    border-radius: var(--radius);
+    padding: 18px 22px;
     border: 2.5px solid var(--ink);
     box-shadow: 0 5px 0 0 var(--ink);
+    transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+    position: relative;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .benefit:hover { transform: translate(-2px, -3px); box-shadow: 0 8px 0 0 var(--ink); }
+  .benefit:hover .benefit-icon { transform: rotate(-6deg) scale(1.05); }
+  .benefit-icon {
+    flex-shrink: 0;
+    position: relative;
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    display: grid; place-items: center;
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 3px 0 0 var(--ink);
     transition: transform 280ms var(--ease-bounce);
   }
+  .benefit-icon::after {
+    content: "+";
+    position: absolute; top: -10px; right: -10px;
+    width: 24px; height: 24px;
+    background: var(--yellow);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--font-pop);
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 1;
+    box-shadow: 0 2px 0 0 var(--ink);
+  }
   .benefit:nth-child(1) .benefit-icon { background: var(--teal); color: white; }
-  .benefit:nth-child(1)::before { background: var(--teal); }
   .benefit:nth-child(2) .benefit-icon { background: var(--violet); color: white; }
-  .benefit:nth-child(2)::before { background: var(--violet); }
   .benefit:nth-child(3) .benefit-icon { background: var(--yellow); color: var(--ink); }
-  .benefit:nth-child(3)::before { background: var(--yellow); }
   .benefit:nth-child(4) .benefit-icon { background: var(--violet-deep); color: white; }
-  .benefit:nth-child(4)::before { background: var(--violet-deep); }
   .benefit:nth-child(5) .benefit-icon { background: var(--teal-deep); color: white; }
-  .benefit:nth-child(5)::before { background: var(--teal-deep); }
   .benefit:nth-child(6) .benefit-icon { background: #FF8A4D; color: white; }
-  .benefit:nth-child(6)::before { background: #FF8A4D; }
-  .benefit-icon svg { width: 52px; height: 52px; stroke-width: 2; }
-  .benefit h4 { font-size: 22px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.018em; font-family: var(--font-display); }
-  .benefit p { margin: 0; font-size: 15.5px; color: var(--ink-2); line-height: 1.55; }
-  @media (max-width: 900px) { .benefits-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 540px) { .benefits-grid { grid-template-columns: 1fr; } }
+  .benefit-icon svg { width: 32px; height: 32px; stroke-width: 2.2; }
+  .benefit-body { min-width: 0; }
+  .benefit h4 { font-size: 17px; font-weight: 800; margin: 0 0 2px; letter-spacing: -0.015em; font-family: var(--font-display); line-height: 1.2; }
+  .benefit p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.4; }
+  @media (max-width: 640px) { .benefits-grid { grid-template-columns: 1fr; } }
 
   /* ============ EMOTIONAL ============ */
   .emotional {
@@ -714,31 +717,29 @@
   .lm-card {
     background: rgba(255,255,255,.08);
     border: 2px solid rgba(255,255,255,.2);
-    border-radius: var(--radius-lg);
-    padding: 32px 22px;
+    border-radius: var(--radius);
+    padding: 18px 16px;
     text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
     transition: transform 240ms var(--ease-out), background 220ms var(--ease-out);
   }
-  .lm-card:hover { transform: translateY(-4px); background: rgba(255,255,255,.12); }
-  .lm-card .lm-label {
-    font-family: var(--font-pop);
-    font-size: 32px;
-    font-weight: 800;
-    color: rgba(255,255,255,.4);
-    margin-bottom: 4px;
+  .lm-card:hover { transform: translateY(-4px); background: rgba(255,255,255,.14); }
+  .lm-emoji {
+    font-size: 36px;
     line-height: 1;
   }
   .lm-card .lm-value {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 22px;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    font-size: 17px;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: white;
   }
-  .lm-card.more { background: var(--yellow); border-color: var(--yellow); transform: rotate(-2deg); }
-  .lm-card.more:hover { transform: rotate(-2deg) translateY(-4px); }
-  .lm-card.more .lm-label { color: var(--ink); font-size: 48px; }
+  .lm-card.more { background: var(--yellow); border-color: var(--yellow); transform: rotate(-1.5deg); }
+  .lm-card.more:hover { transform: rotate(-1.5deg) translateY(-4px); }
   .lm-card.more .lm-value { color: var(--ink); }
+  @media (max-width: 700px) { .lm-card .lm-value { font-size: 15.5px; } }
   @media (max-width: 700px) { .less-more { grid-template-columns: 1fr 1fr; } }
 
   /* ============ USE CASES ============ */
@@ -800,11 +801,11 @@
     border-bottom: 1px solid var(--line);
   }
   .ct-row:last-child { border-bottom: none; }
-  .ct-row > div { padding: 22px 24px; font-size: 15.5px; }
-  .ct-row > div:first-child { color: var(--ink-3); font-weight: 500; border-right: 1px solid var(--line); }
+  .ct-row > div { padding: 14px 20px; font-size: 15px; line-height: 1.35; }
+  .ct-row > div:first-child { color: var(--ink-3); font-weight: 600; border-right: 1px solid var(--line); }
   .ct-row > div:nth-child(2) { color: var(--ink-2); border-right: 1px solid var(--line); text-decoration: line-through; text-decoration-color: rgba(0,0,0,.25); }
   .ct-row > div:nth-child(3) { color: var(--ink); font-weight: 600; background: var(--teal-soft); }
-  .ct-row.head > div { font-family: var(--font-pop); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; padding: 18px 24px; }
+  .ct-row.head > div { font-family: var(--font-pop); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; padding: 12px 20px; }
   .ct-row.head > div:nth-child(2) { background: var(--bg-soft); color: var(--ink-2); text-decoration: none; }
   .ct-row.head > div:nth-child(3) { background: var(--teal); color: white; }
   .compare-strong {
@@ -1234,9 +1235,9 @@
 <section class="problem" data-screen-label="03 Problema">
   <div class="container">
     <div class="section-head">
-      <div class="kicker">😤 El bardo de siempre</div>
-      <h2 class="h2">Limpiar pis de tu mascota es <span class="hand" style="color:var(--violet)">un quilombo.</span></h2>
-      <p class="body-lead">Sabés bien de qué hablamos. El líquido que se esparce, el olor que queda, el papel que no alcanza, y esa sensación de "ya está pero no del todo".</p>
+      <div class="kicker">😤 El problema de siempre</div>
+      <h2 class="h2">Limpiar pis de tu mascota es <span class="hand" style="color:var(--violet)">un dolor de cabeza.</span></h2>
+      <p class="body-lead">El líquido que se esparce, el olor que queda, el papel que no alcanza. Sabés bien de qué hablamos.</p>
     </div>
     <div class="pain-grid">
       <div class="pain-card"><div class="x">💦</div><p>El pis se esparce y cuesta juntarlo</p></div>
@@ -1315,43 +1316,55 @@
         <div class="benefit-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
         </div>
-        <h4>Solidifica la orina en minutos</h4>
-        <p>Convierte el líquido en una textura tipo gel para que puedas retirarlo sin complicaciones.</p>
+        <div class="benefit-body">
+          <h4>Solidifica en minutos</h4>
+          <p>El pis se vuelve gel. Lo barrés y listo.</p>
+        </div>
       </div>
       <div class="benefit">
         <div class="benefit-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C8 8 5 11 5 15a7 7 0 0 0 14 0c0-4-3-7-7-13z"/><path d="M9 17a3 3 0 0 0 3-3" stroke-linecap="round"/></svg>
         </div>
-        <h4>Deja la zona seca</h4>
-        <p>Ayuda a eliminar la humedad superficial y evita que el pis se siga expandiendo.</p>
+        <div class="benefit-body">
+          <h4>Deja la zona seca</h4>
+          <p>Sin humedad ni líquido que se siga expandiendo.</p>
+        </div>
       </div>
       <div class="benefit">
         <div class="benefit-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 14l4-4 4 4 6-6 4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 19h18" stroke-linecap="round"/></svg>
         </div>
-        <h4>Facilita la limpieza</h4>
-        <p>No necesitás frotar de más, usar grandes cantidades de papel o andar con trapos mojados.</p>
+        <div class="benefit-body">
+          <h4>Limpieza sin esfuerzo</h4>
+          <p>Sin trapos, sin papel de más, sin frotar.</p>
+        </div>
       </div>
       <div class="benefit">
         <div class="benefit-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l8 4v6c0 4-3 7-8 8-5-1-8-4-8-8V7l8-4z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h4>Acción antibacterial</h4>
-        <p>Ayuda a mejorar la higiene de la zona donde tu mascota orinó.</p>
+        <div class="benefit-body">
+          <h4>Acción antibacterial</h4>
+          <p>Mejora la higiene de la zona tratada.</p>
+        </div>
       </div>
       <div class="benefit">
         <div class="benefit-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 11h2v9H5zM10 7h2v13h-2zM15 13h2v7h-2zM20 5v15" stroke-linecap="round"/></svg>
         </div>
-        <h4>Reduce el contacto con la orina</h4>
-        <p>Limpiás de forma más cómoda, rápida y sin tener que tocar el líquido.</p>
+        <div class="benefit-body">
+          <h4>Cero contacto</h4>
+          <p>No tenés que tocar el pis con las manos.</p>
+        </div>
       </div>
       <div class="benefit">
         <div class="benefit-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="9" r="2"/><circle cx="16" cy="9" r="2"/><circle cx="6" cy="14" r="1.6"/><circle cx="18" cy="14" r="1.6"/><path d="M12 13c-3 0-5 2-5 4 0 2 2 3 5 3s5-1 5-3-2-4-5-4z"/></svg>
         </div>
-        <h4>Ideal para perros y gatos</h4>
-        <p>Útil para hogares con cachorros, mascotas adultas, gatos, animales mayores o accidentes ocasionales.</p>
+        <div class="benefit-body">
+          <h4>Perros y gatos</h4>
+          <p>Cachorros, adultos, mayores. Todos.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1364,12 +1377,12 @@
       <div class="kicker">Para vos y tu mascota</div>
       <h2 class="h2">Porque amar a tu mascota no significa bancarte el desastre</h2>
     </div>
-    <p>Tu perro o tu gato pueden ser parte de tu familia, dormir cerca tuyo y alegrarte el día. Pero cuando aparece pis en el piso, el momento se vuelve incómodo. Psweep no busca reemplazar el amor por tu mascota. Busca hacerte más fácil la convivencia.</p>
+    <p>Tu mascota te alegra el día. El pis en el piso, no tanto. Psweep hace la convivencia más fácil.</p>
     <div class="less-more">
-      <div class="lm-card"><div class="lm-label">−</div><div class="lm-value">Tiempo limpiando</div></div>
-      <div class="lm-card"><div class="lm-label">−</div><div class="lm-value">Olor en casa</div></div>
-      <div class="lm-card"><div class="lm-label">−</div><div class="lm-value">Asco diario</div></div>
-      <div class="lm-card more"><div class="lm-label">+</div><div class="lm-value">Tranquilidad</div></div>
+      <div class="lm-card"><div class="lm-emoji">⏱️</div><div class="lm-value">Ahorrás tiempo</div></div>
+      <div class="lm-card"><div class="lm-emoji">🌬️</div><div class="lm-value">Menos olor</div></div>
+      <div class="lm-card"><div class="lm-emoji">😌</div><div class="lm-value">Menos asco diario</div></div>
+      <div class="lm-card more"><div class="lm-emoji">🧘</div><div class="lm-value">Más tranquilidad</div></div>
     </div>
   </div>
 </section>
