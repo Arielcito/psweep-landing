@@ -26,19 +26,49 @@
     --bg: #FFFFFF;
     --bg-soft: #F7F7F5;
 
-    --radius: 18px;
-    --radius-lg: 28px;
+    --radius: 22px;
+    --radius-lg: 32px;
     --radius-pill: 999px;
 
     --shadow-sm: 0 1px 2px rgba(20,20,30,.06), 0 4px 12px rgba(20,20,30,.05);
-    --shadow-md: 0 8px 30px rgba(20,20,30,.08);
-    --shadow-lg: 0 30px 60px -20px rgba(20,20,30,.18);
+    --shadow-md: 0 10px 30px rgba(20,20,30,.10);
+    --shadow-lg: 0 30px 60px -20px rgba(20,20,30,.20);
+    --shadow-pop: 0 16px 40px -12px rgba(0,158,155,.35);
+    --shadow-violet: 0 16px 40px -12px rgba(111,74,255,.40);
+    --shadow-yellow: 0 16px 40px -12px rgba(255,184,0,.45);
 
     --font-display: "Poppins", system-ui, sans-serif;
     --font-pop: "Baloo 2", "Poppins", system-ui, sans-serif;
     --font-hand: "Caveat Brush", cursive;
 
     --container: 1200px;
+
+    /* Emil-style easings — strong, intentional curves */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* ============ ENTRANCE (stagger reveal) ============ */
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0)    scale(1); }
+  }
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50%      { transform: translateY(-8px) rotate(var(--r, 0deg)); }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(8px, -10px) scale(1.04); }
+  }
+  .reveal {
+    animation: pop-in 600ms var(--ease-out) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, [class*="hero-tag"], .hero-blob { animation: none !important; }
+    * { transition-duration: 0.01ms !important; }
   }
 
   * { box-sizing: border-box; }
@@ -78,11 +108,12 @@
     display: flex; align-items: center; gap: 10px;
     text-decoration: none; color: var(--ink);
   }
-  .brand img { width: 36px; height: 36px; }
+  .brand img { width: 40px; height: 40px; transition: transform 280ms var(--ease-bounce); }
+  .brand:hover img { transform: rotate(-8deg) scale(1.06); }
   .brand-name {
     font-family: var(--font-pop);
     font-weight: 800;
-    font-size: 22px;
+    font-size: 24px;
     letter-spacing: -0.01em;
     color: var(--teal);
   }
@@ -96,64 +127,77 @@
   }
   .nav-links a:hover { color: var(--teal); }
   .nav-cta {
-    background: var(--ink);
+    background: var(--teal);
     color: white;
-    padding: 11px 18px;
+    padding: 12px 20px;
     border-radius: var(--radius-pill);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
     text-decoration: none;
     display: inline-flex; align-items: center; gap: 8px;
-    transition: transform .15s, background .15s;
+    transition: transform 220ms var(--ease-out), background 200ms var(--ease-out), box-shadow 220ms var(--ease-out);
+    box-shadow: 0 6px 18px -6px rgba(0,158,155,.5);
   }
-  .nav-cta:hover { background: var(--teal); transform: translateY(-1px); }
+  .nav-cta:hover { background: var(--teal-deep); transform: translateY(-1px); box-shadow: 0 10px 24px -8px rgba(0,158,155,.65); }
+  .nav-cta:active { transform: scale(0.97); }
   @media (max-width: 800px) { .nav-links { display: none; } }
 
   /* ============ BUTTONS ============ */
   .btn {
     display: inline-flex; align-items: center; justify-content: center;
     gap: 10px;
-    padding: 16px 28px;
+    padding: 18px 32px;
     border-radius: var(--radius-pill);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
     text-decoration: none;
-    transition: transform .15s ease, box-shadow .15s ease, background .15s;
+    transition: transform 200ms var(--ease-out), box-shadow 220ms var(--ease-out), background 200ms var(--ease-out);
     cursor: pointer;
+    letter-spacing: -0.005em;
+    position: relative;
   }
+  .btn:active { transform: scale(0.97); transition-duration: 120ms; }
   .btn-primary {
     background: var(--teal);
     color: white;
-    box-shadow: 0 8px 24px -8px rgba(0,158,155,.6);
+    box-shadow: var(--shadow-pop);
   }
-  .btn-primary:hover { background: var(--teal-deep); transform: translateY(-2px); box-shadow: 0 14px 30px -8px rgba(0,158,155,.7); }
+  .btn-primary:hover { background: var(--teal-deep); transform: translateY(-2px); box-shadow: 0 22px 50px -14px rgba(0,158,155,.75); }
+  .btn-primary:active { transform: scale(0.97); }
   .btn-secondary {
     background: white;
     color: var(--ink);
-    border: 1.5px solid var(--line);
+    border: 2px solid var(--ink);
+    box-shadow: 0 4px 0 0 var(--ink);
   }
-  .btn-secondary:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 var(--ink); }
+  .btn-secondary:active { transform: translateY(2px) scale(0.98); box-shadow: 0 0 0 0 var(--ink); }
   .btn-violet {
     background: var(--violet);
     color: white;
-    box-shadow: 0 8px 24px -8px rgba(111,74,255,.55);
+    box-shadow: var(--shadow-violet);
   }
-  .btn-violet:hover { background: var(--violet-deep); transform: translateY(-2px); }
+  .btn-violet:hover { background: var(--violet-deep); transform: translateY(-2px); box-shadow: 0 22px 50px -14px rgba(111,74,255,.7); }
+  .btn-violet:active { transform: scale(0.97); }
   .btn-yellow {
     background: var(--yellow);
     color: var(--ink);
+    box-shadow: var(--shadow-yellow);
   }
-  .btn-yellow:hover { background: #f0a900; transform: translateY(-2px); }
+  .btn-yellow:hover { background: #FFC833; transform: translateY(-2px); box-shadow: 0 22px 50px -14px rgba(255,184,0,.7); }
+  .btn-yellow:active { transform: scale(0.97); }
+  .btn-xl { padding: 22px 40px; font-size: 18px; }
 
   /* ============ HERO ============ */
   .hero {
     position: relative;
     overflow: hidden;
     background:
-      radial-gradient(1200px 600px at 90% -10%, rgba(111,74,255,.08), transparent 60%),
-      radial-gradient(900px 500px at -10% 60%, rgba(0,158,155,.10), transparent 60%),
+      radial-gradient(1200px 600px at 90% -10%, rgba(111,74,255,.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 60%, rgba(0,158,155,.16), transparent 60%),
+      radial-gradient(700px 400px at 50% 110%, rgba(255,184,0,.12), transparent 70%),
       var(--bg-soft);
-    padding: 64px 0 96px;
+    padding: 56px 0 110px;
   }
   .hero-grid {
     display: grid;
@@ -162,15 +206,31 @@
     align-items: center;
   }
   .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 14px;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 18px;
     background: white;
-    border: 1px solid var(--line);
+    border: 1.5px solid var(--ink);
     border-radius: var(--radius-pill);
     font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-2);
+    font-weight: 700;
+    color: var(--ink);
     margin-bottom: 22px;
+    box-shadow: 0 4px 0 0 var(--ink);
+    transform: rotate(-1deg);
+  }
+  .eyebrow .live-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #FF4D4D;
+    position: relative;
+  }
+  .eyebrow .live-dot::after {
+    content: ""; position: absolute; inset: -4px;
+    border-radius: 50%; background: #FF4D4D;
+    opacity: .4; animation: pulse 1.8s var(--ease-out) infinite;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(0.8); opacity: .55; }
+    100% { transform: scale(2.2); opacity: 0; }
   }
   .dot {
     width: 8px; height: 8px; border-radius: 50%;
@@ -179,15 +239,17 @@
   }
   .h1 {
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(40px, 5.6vw, 68px);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    margin: 0 0 20px;
+    font-weight: 900;
+    font-size: clamp(42px, 6.2vw, 74px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin: 0 0 22px;
     text-wrap: balance;
   }
   .h1 .accent {
-    color: var(--teal);
+    background: linear-gradient(180deg, transparent 64%, var(--yellow) 64%);
+    color: var(--ink);
+    padding: 0 4px;
   }
   .hand {
     font-family: var(--font-hand);
@@ -217,10 +279,23 @@
   .impact-line {
     font-family: var(--font-pop);
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--violet-deep);
     display: flex; align-items: center; gap: 10px;
     flex-wrap: wrap;
+  }
+  .impact-line .ilabel {
+    background: var(--violet);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 13px;
+  }
+  .impact-line .ilabel.more {
+    background: var(--yellow); color: var(--ink);
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 16px; padding: 2px 10px;
   }
   .impact-line .pip {
     width: 6px; height: 6px; border-radius: 50%; background: var(--yellow);
@@ -231,73 +306,102 @@
     position: relative;
     aspect-ratio: 1/1;
     width: 100%;
-    max-width: 540px;
+    max-width: 560px;
     margin: 0 auto;
   }
   .hero-blob {
     position: absolute; inset: 0;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, var(--teal-soft), white 60%, var(--bg-soft));
+    background:
+      radial-gradient(circle at 30% 30%, var(--teal-soft), white 50%, #FFF3D6 90%);
     box-shadow: var(--shadow-lg);
+    animation: drift 8s var(--ease-in-out) infinite;
+  }
+  .hero-blob::before {
+    content: "";
+    position: absolute; inset: -4%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--teal), var(--violet), var(--yellow), var(--teal));
+    filter: blur(40px); opacity: .22; z-index: -1;
+    animation: drift 14s var(--ease-in-out) infinite reverse;
   }
   .hero-product {
     position: absolute;
-    inset: 8%;
-    background: repeating-linear-gradient(
-      135deg,
-      var(--teal-soft) 0 12px,
-      #c8eef0 12px 24px
-    );
-    border-radius: 32px;
+    inset: 6%;
     display: grid;
     place-items: center;
-    color: var(--teal-deep);
-    font-family: ui-monospace, "SF Mono", monospace;
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-    padding: 24px;
-    border: 1px dashed var(--teal);
   }
-  .hero-product span { background: white; padding: 8px 14px; border-radius: 8px; }
+  .hero-product img {
+    width: 88%; height: 88%;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 24px rgba(0,0,0,.18));
+    animation: float-y 4.5s var(--ease-in-out) infinite;
+    --r: 0deg;
+  }
+
   .hero-tag {
     position: absolute;
     background: white;
-    padding: 14px 20px;
-    border-radius: 16px;
-    box-shadow: var(--shadow-md);
-    font-size: 14px;
-    display: flex; align-items: center; gap: 12px;
-    border: 1px solid var(--line);
+    padding: 16px 22px;
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+    font-size: 15px;
+    display: flex; align-items: center; gap: 14px;
+    border: 2.5px solid var(--ink);
+    --r: -4deg;
+    animation: float-y 5.5s var(--ease-in-out) infinite;
   }
-  .hero-tag-1 { top: 8%; left: -6%; transform: rotate(-4deg); }
-  .hero-tag-2 { bottom: 16%; right: -8%; transform: rotate(3deg); }
-  .hero-tag-3 { bottom: -2%; left: 12%; transform: rotate(-2deg); }
+  .hero-tag-1 { top: 4%; left: -10%; --r: -5deg; transform: rotate(-5deg); animation-delay: 0s; }
+  .hero-tag-2 { bottom: 16%; right: -10%; --r: 4deg; transform: rotate(4deg); animation-delay: 1.2s; }
+  .hero-tag-3 { bottom: -4%; left: 10%; --r: -2deg; transform: rotate(-2deg); animation-delay: 2.4s; }
   .hero-tag .badge {
-    width: 36px; height: 36px; border-radius: 50%;
+    width: 58px; height: 58px; border-radius: 18px;
     display: grid; place-items: center;
     font-weight: 800;
     font-family: var(--font-pop);
+    font-size: 28px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 0 0 var(--ink);
   }
-  .badge-teal { background: var(--teal-soft); color: var(--teal-deep); }
-  .badge-violet { background: #EBE2FF; color: var(--violet); }
-  .badge-yellow { background: var(--yellow-soft); color: #8A6500; }
+  .hero-tag .copy strong {
+    font-family: var(--font-pop);
+    font-size: 17px;
+    font-weight: 800;
+    display: block;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .hero-tag .copy small {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .badge-teal { background: var(--teal); color: white; }
+  .badge-violet { background: var(--violet); color: white; }
+  .badge-yellow { background: var(--yellow); color: var(--ink); }
 
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
   }
 
   /* ============ SECTION SHELL ============ */
-  section { padding: 96px 0; }
-  .section-head { max-width: 760px; margin: 0 auto 56px; text-align: center; }
+  section { padding: 110px 0; }
+  .section-head { max-width: 800px; margin: 0 auto 64px; text-align: center; }
   .kicker {
+    display: inline-block;
     font-family: var(--font-pop);
-    color: var(--teal);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.16em;
+    color: var(--ink);
+    background: var(--yellow);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 14px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 18px;
+    border: 2px solid var(--ink);
+    box-shadow: 0 2px 0 0 var(--ink);
+    transform: rotate(-1deg);
   }
   .h2 {
     font-family: var(--font-display);
@@ -319,21 +423,34 @@
 
   /* ============ DEMO / VIDEO ============ */
   .demo { background: var(--ink); color: white; }
-  .demo .kicker { color: var(--yellow); }
+  .demo .kicker { color: var(--ink); background: var(--yellow); border-color: var(--yellow); box-shadow: 0 2px 0 0 rgba(0,0,0,.4); }
   .demo .h2 { color: white; }
   .demo .body-lead { color: rgba(255,255,255,.75); }
   .video-frame {
     margin: 0 auto;
     max-width: 1000px;
     aspect-ratio: 16/9;
-    background:
-      repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 16px, rgba(255,255,255,.08) 16px 32px);
+    background: #1f1f24;
     border-radius: var(--radius-lg);
-    border: 1px dashed rgba(255,255,255,.25);
+    border: 2.5px solid var(--yellow);
     position: relative;
     display: grid; place-items: center;
     overflow: hidden;
+    box-shadow: 0 10px 0 0 var(--yellow);
   }
+  .video-frame img.poster {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: .85;
+  }
+  .video-frame::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0,0,0,.0) 0%, rgba(0,0,0,.55) 80%);
+    pointer-events: none;
+  }
+  .video-frame > .play-button, .video-frame > .video-caption { position: relative; z-index: 2; }
   .play-button {
     width: 96px; height: 96px;
     border-radius: 50%;
@@ -370,33 +487,35 @@
   }
 
   /* ============ PROBLEM ============ */
-  .problem { background: var(--bg-soft); }
+  .problem { background: linear-gradient(180deg, var(--bg-soft) 0%, #FFF5E6 100%); }
   .pain-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    margin-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin-top: 48px;
   }
   .pain-card {
     background: white;
     border-radius: var(--radius);
-    padding: 24px;
-    border: 1px solid var(--line);
-    display: flex; align-items: flex-start; gap: 14px;
-    transition: transform .2s, box-shadow .2s;
+    padding: 28px 24px;
+    border: 2px solid var(--ink);
+    display: flex; align-items: center; gap: 16px;
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+    box-shadow: 0 4px 0 0 var(--ink);
   }
-  .pain-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+  .pain-card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 0 var(--ink); }
   .pain-card .x {
     flex-shrink: 0;
-    width: 28px; height: 28px;
-    border-radius: 8px;
+    width: 56px; height: 56px;
+    border-radius: 16px;
     background: #FFE5E5;
     color: #D43A3A;
     display: grid; place-items: center;
-    font-weight: 800;
-    font-size: 16px;
+    font-size: 28px;
+    transition: transform 200ms var(--ease-out);
   }
-  .pain-card p { margin: 0; font-size: 15px; color: var(--ink); line-height: 1.4; }
+  .pain-card:hover .x { transform: rotate(-8deg) scale(1.08); }
+  .pain-card p { margin: 0; font-size: 15.5px; color: var(--ink); line-height: 1.35; font-weight: 600; }
 
   /* ============ PRODUCT INTRO ============ */
   .intro-grid {
@@ -406,24 +525,25 @@
     align-items: center;
   }
   .product-card {
-    background: var(--teal-soft);
+    background:
+      radial-gradient(circle at 50% 40%, white, var(--teal-soft) 70%);
     border-radius: var(--radius-lg);
     aspect-ratio: 4/5;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-md);
-  }
-  .product-card::before {
-    content: "PRODUCT SHOT — Psweep envase";
-    position: absolute; inset: 24px;
-    border: 1px dashed var(--teal-deep);
-    border-radius: var(--radius);
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 10px 0 0 var(--ink);
     display: grid; place-items: center;
-    background: repeating-linear-gradient(135deg, transparent 0 14px, rgba(0,158,155,.08) 14px 28px);
-    color: var(--teal-deep);
-    font-family: ui-monospace, monospace;
-    font-size: 13px;
-    text-align: center;
+    padding: 8%;
+    transition: transform 320ms var(--ease-out);
+  }
+  .product-card:hover { transform: rotate(-2deg) translateY(-4px); }
+  .product-card img {
+    width: 80%; height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 22px rgba(0,0,0,.18));
+    animation: float-y 4s var(--ease-in-out) infinite;
+    --r: 0deg;
   }
   .formula {
     font-family: var(--font-hand);
@@ -440,81 +560,118 @@
   .steps {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 24px;
     counter-reset: step;
   }
   .step {
     background: white;
-    border-radius: var(--radius);
-    padding: 32px 24px;
-    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px 32px;
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 6px 0 0 var(--ink);
     position: relative;
-    transition: transform .2s;
+    transition: transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
   }
-  .step:hover { transform: translateY(-4px); border-color: var(--teal); }
+  .step:hover { transform: translateY(-5px) rotate(-1deg); box-shadow: 0 12px 0 0 var(--ink); }
+  .step:hover .step-num { transform: scale(1.08) rotate(-4deg); }
   .step-num {
-    width: 48px; height: 48px;
-    border-radius: 14px;
+    position: absolute;
+    top: -28px; left: 24px;
+    width: 64px; height: 64px;
+    border-radius: 20px;
     background: var(--teal);
     color: white;
     display: grid; place-items: center;
     font-family: var(--font-pop);
-    font-weight: 800;
-    font-size: 22px;
-    margin-bottom: 20px;
+    font-weight: 900;
+    font-size: 32px;
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 4px 0 0 var(--ink);
+    transition: transform 280ms var(--ease-bounce);
   }
   .step:nth-child(2) .step-num { background: var(--violet); }
   .step:nth-child(3) .step-num { background: var(--yellow); color: var(--ink); }
-  .step:nth-child(4) .step-num { background: var(--violet-deep); }
+  .step:nth-child(4) .step-num { background: var(--teal-deep); }
   .step h4 {
-    font-size: 18px; margin: 0 0 8px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-size: 20px; margin: 12px 0 8px;
+    font-weight: 800;
+    letter-spacing: -0.018em;
+    font-family: var(--font-display);
   }
-  .step p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+  .step p { margin: 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
   .step-illust {
     aspect-ratio: 1;
-    background: var(--bg-soft);
-    border-radius: 12px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    margin: 18px 0 18px;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    box-shadow: 0 3px 0 0 var(--ink);
     display: grid; place-items: center;
-    font-family: ui-monospace, monospace;
-    font-size: 11px;
-    color: var(--ink-3);
-    border: 1px dashed var(--line);
   }
-  @media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+  .step-illust img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 600ms var(--ease-out);
+  }
+  .step:hover .step-illust img { transform: scale(1.05); }
+  .step:nth-child(1) .step-illust { background: linear-gradient(135deg, #FFE5E5, #FFF0CC); }
+  .step:nth-child(2) .step-illust { background: linear-gradient(135deg, var(--teal-soft), #EBE2FF); }
+  .step:nth-child(3) .step-illust { background: linear-gradient(135deg, var(--yellow-soft), #FFE2D5); }
+  .step:nth-child(4) .step-illust { background: linear-gradient(135deg, var(--teal-soft), white); }
+  @media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; row-gap: 48px; } }
   @media (max-width: 540px) { .steps { grid-template-columns: 1fr; } }
 
   /* ============ BENEFITS ============ */
   .benefits-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 24px;
   }
   .benefit {
     background: white;
-    border-radius: var(--radius);
-    padding: 28px;
-    border: 1px solid var(--line);
-    transition: transform .2s, border-color .2s;
+    border-radius: var(--radius-lg);
+    padding: 36px 28px;
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 6px 0 0 var(--ink);
+    transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+    position: relative;
+    overflow: hidden;
   }
-  .benefit:hover { transform: translateY(-3px); border-color: var(--teal); }
+  .benefit::before {
+    content: "";
+    position: absolute; inset: -40% -40% auto auto;
+    width: 200px; height: 200px; border-radius: 50%;
+    opacity: .15;
+    pointer-events: none;
+    transition: transform 600ms var(--ease-out);
+  }
+  .benefit:hover { transform: translateY(-6px); box-shadow: 0 12px 0 0 var(--ink); }
+  .benefit:hover::before { transform: scale(1.4); }
+  .benefit:hover .benefit-icon { transform: rotate(-6deg) scale(1.05); }
   .benefit-icon {
-    width: 52px; height: 52px;
-    border-radius: 14px;
+    width: 96px; height: 96px;
+    border-radius: 26px;
     display: grid; place-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 24px;
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 5px 0 0 var(--ink);
+    transition: transform 280ms var(--ease-bounce);
   }
-  .benefit:nth-child(1) .benefit-icon { background: var(--teal-soft); color: var(--teal-deep); }
-  .benefit:nth-child(2) .benefit-icon { background: #EBE2FF; color: var(--violet); }
-  .benefit:nth-child(3) .benefit-icon { background: var(--yellow-soft); color: #8A6500; }
-  .benefit:nth-child(4) .benefit-icon { background: var(--teal-soft); color: var(--teal-deep); }
-  .benefit:nth-child(5) .benefit-icon { background: #EBE2FF; color: var(--violet); }
-  .benefit:nth-child(6) .benefit-icon { background: var(--yellow-soft); color: #8A6500; }
-  .benefit-icon svg { width: 26px; height: 26px; }
-  .benefit h4 { font-size: 18px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
-  .benefit p { margin: 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
+  .benefit:nth-child(1) .benefit-icon { background: var(--teal); color: white; }
+  .benefit:nth-child(1)::before { background: var(--teal); }
+  .benefit:nth-child(2) .benefit-icon { background: var(--violet); color: white; }
+  .benefit:nth-child(2)::before { background: var(--violet); }
+  .benefit:nth-child(3) .benefit-icon { background: var(--yellow); color: var(--ink); }
+  .benefit:nth-child(3)::before { background: var(--yellow); }
+  .benefit:nth-child(4) .benefit-icon { background: var(--violet-deep); color: white; }
+  .benefit:nth-child(4)::before { background: var(--violet-deep); }
+  .benefit:nth-child(5) .benefit-icon { background: var(--teal-deep); color: white; }
+  .benefit:nth-child(5)::before { background: var(--teal-deep); }
+  .benefit:nth-child(6) .benefit-icon { background: #FF8A4D; color: white; }
+  .benefit:nth-child(6)::before { background: #FF8A4D; }
+  .benefit-icon svg { width: 52px; height: 52px; stroke-width: 2; }
+  .benefit h4 { font-size: 22px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.018em; font-family: var(--font-display); }
+  .benefit p { margin: 0; font-size: 15.5px; color: var(--ink-2); line-height: 1.55; }
   @media (max-width: 900px) { .benefits-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 540px) { .benefits-grid { grid-template-columns: 1fr; } }
 
@@ -527,6 +684,7 @@
     padding: 120px 0;
   }
   .emotional .h2 { color: white; max-width: 800px; margin: 0 auto 24px; }
+  .emotional .kicker { background: var(--yellow); color: var(--ink); border-color: var(--yellow); box-shadow: 0 2px 0 0 rgba(0,0,0,.4); }
   .emotional p { color: rgba(255,255,255,.8); max-width: 640px; margin: 0 auto 40px; text-align: center; font-size: 18px; }
   .less-more {
     display: grid;
@@ -536,57 +694,68 @@
     margin: 40px auto 0;
   }
   .lm-card {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: var(--radius);
-    padding: 28px 20px;
+    background: rgba(255,255,255,.08);
+    border: 2px solid rgba(255,255,255,.2);
+    border-radius: var(--radius-lg);
+    padding: 32px 22px;
     text-align: center;
+    transition: transform 240ms var(--ease-out), background 220ms var(--ease-out);
   }
+  .lm-card:hover { transform: translateY(-4px); background: rgba(255,255,255,.12); }
   .lm-card .lm-label {
     font-family: var(--font-pop);
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: rgba(255,255,255,.55);
-    margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: 800;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 4px;
+    line-height: 1;
   }
   .lm-card .lm-value {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 28px;
+    font-size: 22px;
     letter-spacing: -0.02em;
+    line-height: 1.2;
   }
-  .lm-card.more .lm-label { color: var(--yellow); }
-  .lm-card.more .lm-value { color: var(--yellow); }
+  .lm-card.more { background: var(--yellow); border-color: var(--yellow); transform: rotate(-2deg); }
+  .lm-card.more:hover { transform: rotate(-2deg) translateY(-4px); }
+  .lm-card.more .lm-label { color: var(--ink); font-size: 48px; }
+  .lm-card.more .lm-value { color: var(--ink); }
   @media (max-width: 700px) { .less-more { grid-template-columns: 1fr 1fr; } }
 
   /* ============ USE CASES ============ */
   .uses { background: var(--bg-soft); }
   .uses-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
   }
   .use-chip {
     background: white;
-    border: 1px solid var(--line);
-    padding: 18px 20px;
-    border-radius: 14px;
-    display: flex; align-items: center; gap: 12px;
-    font-size: 15px;
-    font-weight: 500;
-    transition: all .15s;
+    border: 2px solid var(--ink);
+    padding: 18px 22px;
+    border-radius: 18px;
+    display: flex; align-items: center; gap: 14px;
+    font-size: 15.5px;
+    font-weight: 600;
+    box-shadow: 0 3px 0 0 var(--ink);
+    transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
   }
-  .use-chip:hover { border-color: var(--teal); transform: translateX(3px); }
+  .use-chip:hover { transform: translate(-2px, -2px); box-shadow: 0 6px 0 0 var(--ink); }
   .use-chip .check {
-    width: 22px; height: 22px;
-    border-radius: 50%;
+    width: 32px; height: 32px;
+    border-radius: 10px;
     background: var(--teal);
     color: white;
     display: grid; place-items: center;
-    font-size: 12px;
+    font-size: 16px;
+    font-weight: 900;
     flex-shrink: 0;
+    border: 2px solid var(--ink);
+    box-shadow: 0 2px 0 0 var(--ink);
   }
+  .use-chip:nth-child(3n+2) .check { background: var(--violet); }
+  .use-chip:nth-child(3n+3) .check { background: var(--yellow); color: var(--ink); }
   .uses-closing {
     text-align: center;
     margin-top: 56px;
@@ -603,8 +772,9 @@
     margin: 0 auto;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    border: 1px solid var(--line);
+    border: 2.5px solid var(--ink);
     background: white;
+    box-shadow: 0 8px 0 0 var(--ink);
   }
   .ct-row {
     display: grid;
@@ -650,21 +820,24 @@
     background: white;
     border-radius: var(--radius-lg);
     padding: 40px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 0 0 var(--ink);
     position: relative;
-    border: 1px solid var(--line);
+    border: 2.5px solid var(--ink);
   }
   .offer-badge {
     position: absolute;
-    top: -16px; right: 32px;
+    top: -18px; right: 28px;
     background: var(--yellow);
     color: var(--ink);
-    padding: 8px 16px;
+    padding: 10px 18px;
     border-radius: var(--radius-pill);
     font-family: var(--font-pop);
-    font-weight: 700;
-    font-size: 13px;
+    font-weight: 800;
+    font-size: 14px;
     letter-spacing: 0.04em;
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 3px 0 0 var(--ink);
+    transform: rotate(3deg);
   }
   .offer-card h3 {
     font-family: var(--font-display);
@@ -702,11 +875,28 @@
 
   /* Stock bar */
   .stock-block {
-    background: white;
+    background: var(--violet-deep);
+    color: white;
     border-radius: var(--radius-lg);
     padding: 36px;
-    border: 1px solid var(--line);
+    border: 2.5px solid var(--ink);
+    box-shadow: 0 8px 0 0 var(--ink);
+    position: relative;
+    overflow: hidden;
   }
+  .stock-block::before {
+    content: "";
+    position: absolute; inset: -50% -50% auto auto;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: var(--yellow);
+    opacity: .15;
+    pointer-events: none;
+  }
+  .stock-block .kicker { color: var(--yellow); position: relative; }
+  .stock-block h3, .stock-block p, .stock-block .stock-meta { position: relative; }
+  .stock-block p { color: rgba(255,255,255,.85) !important; }
+  .stock-block .stock-meta strong { color: white !important; }
+  .stock-block .stock-meta { color: rgba(255,255,255,.7) !important; }
   .stock-block h3 {
     font-size: 26px;
     margin: 0 0 8px;
@@ -740,45 +930,61 @@
   /* ============ FAQ ============ */
   .faq-wrap { max-width: 820px; margin: 0 auto; }
   .faq-item {
-    border-bottom: 1px solid var(--line);
+    background: white;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 0 0 var(--ink);
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
   }
+  .faq-item:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 var(--ink); }
   .faq-q {
     width: 100%;
     background: transparent;
     text-align: left;
-    padding: 24px 0;
+    padding: 22px 26px;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink);
     display: flex; align-items: center; justify-content: space-between;
     gap: 24px;
-    transition: color .15s;
+    transition: color 180ms var(--ease-out);
   }
-  .faq-q:hover { color: var(--teal); }
+  .faq-q:hover { color: var(--teal-deep); }
+  .faq-q:active { transform: scale(0.99); }
   .faq-q .icon {
-    width: 28px; height: 28px;
-    border-radius: 50%;
+    width: 36px; height: 36px;
+    border-radius: 12px;
     background: var(--bg-soft);
+    border: 2px solid var(--ink);
     display: grid; place-items: center;
-    transition: transform .25s, background .15s;
+    transition: transform 280ms var(--ease-bounce), background 200ms var(--ease-out), color 200ms var(--ease-out);
     flex-shrink: 0;
-    font-size: 16px;
-    color: var(--ink-2);
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--ink);
   }
+  .faq-item.open { background: var(--teal-soft); }
   .faq-item.open .faq-q .icon { background: var(--teal); color: white; transform: rotate(45deg); }
   .faq-a {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .35s ease;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 320ms var(--ease-out);
   }
+  .faq-a > div { overflow: hidden; }
   .faq-a-inner {
-    padding: 0 0 24px;
+    padding: 0 26px 22px;
     color: var(--ink-2);
     line-height: 1.6;
     font-size: 16px;
     max-width: 700px;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 280ms var(--ease-out) 80ms, transform 280ms var(--ease-out) 80ms;
   }
-  .faq-item.open .faq-a { max-height: 400px; }
+  .faq-item.open .faq-a { grid-template-rows: 1fr; }
+  .faq-item.open .faq-a-inner { opacity: 1; transform: translateY(0); }
 
   /* ============ B2B ============ */
   .b2b {
@@ -791,7 +997,7 @@
     gap: 64px;
     align-items: center;
   }
-  .b2b .kicker { color: var(--yellow); }
+  .b2b .kicker { background: var(--yellow); color: var(--ink); border-color: var(--yellow); box-shadow: 0 2px 0 0 rgba(0,0,0,.4); }
   .b2b .h2 { color: white; }
   .b2b-list {
     display: grid;
@@ -812,17 +1018,15 @@
   }
   .b2b-visual {
     aspect-ratio: 1/1;
-    background:
-      repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 16px, rgba(255,255,255,.06) 16px 32px);
-    border: 1px dashed rgba(255,255,255,.2);
+    background: white;
+    border: 2.5px solid var(--yellow);
     border-radius: var(--radius-lg);
-    display: grid; place-items: center;
-    color: rgba(255,255,255,.5);
-    font-family: ui-monospace, monospace;
-    font-size: 13px;
-    text-align: center;
-    padding: 32px;
+    overflow: hidden;
+    box-shadow: 0 8px 0 0 var(--yellow);
+    transition: transform 280ms var(--ease-out), box-shadow 280ms var(--ease-out);
   }
+  .b2b-visual:hover { transform: translate(-4px, -4px); box-shadow: 0 12px 0 0 var(--yellow); }
+  .b2b-visual img { width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 900px) { .b2b-grid { grid-template-columns: 1fr; gap: 40px; } }
 
   /* ============ FINAL CTA ============ */
@@ -839,13 +1043,41 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(600px 300px at 80% 20%, rgba(255,184,0,.20), transparent 60%),
-      radial-gradient(600px 300px at 10% 90%, rgba(111,74,255,.30), transparent 60%);
+      radial-gradient(600px 300px at 80% 20%, rgba(255,184,0,.35), transparent 60%),
+      radial-gradient(600px 300px at 10% 90%, rgba(111,74,255,.45), transparent 60%);
+  }
+  .final-cta::after {
+    content: "🐾"; position: absolute;
+    font-size: 180px;
+    top: 10%; right: 5%;
+    opacity: .07;
+    transform: rotate(-15deg);
+    pointer-events: none;
   }
   .final-cta > * { position: relative; }
-  .final-cta .h2 { color: white; max-width: 780px; margin: 0 auto 20px; }
-  .final-cta p { color: rgba(255,255,255,.85); font-size: 19px; max-width: 580px; margin: 0 auto 36px; }
-  .final-cta .hand { color: var(--yellow); display: block; margin-top: 32px; font-size: 32px; transform: rotate(-2deg); }
+  .final-cta .h2 { color: white; max-width: 880px; margin: 0 auto 20px; font-weight: 900; }
+  .final-cta p { color: rgba(255,255,255,.92); font-size: 20px; max-width: 620px; margin: 0 auto 40px; font-weight: 500; }
+  .final-cta .hand { color: var(--yellow); display: block; margin-top: 32px; font-size: 38px; transform: rotate(-2deg); }
+  .final-cta .urgency {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,.4);
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .final-cta .urgency .live-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: var(--yellow);
+    position: relative;
+  }
+  .final-cta .urgency .live-dot::after {
+    content: ""; position: absolute; inset: -4px;
+    border-radius: 50%; background: var(--yellow);
+    opacity: .4; animation: pulse 1.8s var(--ease-out) infinite;
+  }
 
   /* ============ FOOTER ============ */
   .footer {
@@ -927,34 +1159,37 @@
 <section class="hero" data-screen-label="01 Hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <div class="eyebrow"><span class="dot"></span>Lanzamiento — Primer lote 5.000 unidades</div>
+      <div class="eyebrow"><span class="live-dot"></span>EN VIVO — Primer lote 5.000 u. · 68% reservado</div>
       <h1 class="h1">
-        Convertí el pis de tu perro o gato en <span class="accent">gel sólido</span> y barrélo <span class="hand">en minutos</span>
+        Tu mascota hizo pis. <span class="accent">Tirás polvo,</span><br>
+        se vuelve gel y lo <span class="hand">barrés.</span>
       </h1>
-      <p class="lede">Psweep transforma la orina líquida en una textura sólida tipo gel, ayuda a reducir bacterias, deja la zona seca y facilita la limpieza sin esfuerzo.</p>
-      <p class="support">Ideal para hogares con mascotas, balcones, patios, pisos interiores, cuchas, zonas de entrenamiento y accidentes inesperados.</p>
+      <p class="lede">Psweep convierte la orina de perros y gatos en un gel sólido que retirás con escoba. Sin trapos. Sin enchastre. Sin olor.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="#offer">Comprar Psweep ahora</a>
-        <a class="btn btn-secondary" href="#demo">▶ Ver cómo funciona</a>
+        <a class="btn btn-primary btn-xl" href="#offer">Quiero el mío →</a>
+        <a class="btn btn-secondary" href="#demo">▶ Ver el video</a>
       </div>
       <p class="impact-line">
-        Menos olor <span class="pip"></span> Menos humedad <span class="pip"></span> Menos asco <span class="pip"></span> Más limpieza
+        <span class="ilabel">Menos</span> olor <span class="pip"></span>
+        <span class="ilabel">Menos</span> humedad <span class="pip"></span>
+        <span class="ilabel">Menos</span> asco <span class="pip"></span>
+        <span class="ilabel more">+</span> Tranquilidad
       </p>
     </div>
     <div class="hero-visual">
       <div class="hero-blob"></div>
-      <div class="hero-product"><span>PRODUCT SHOT — Envase Psweep</span></div>
+      <div class="hero-product"><img src="assets/hero-product.webp" alt="Envase de Psweep, polvo solidificador de orina de mascotas"></div>
       <div class="hero-tag hero-tag-1">
         <div class="badge badge-teal">1</div>
-        <div><strong>Tirás</strong><br><span style="color:var(--ink-3); font-size:12px">el polvo</span></div>
+        <div class="copy"><strong>Tirás</strong><small>el polvo</small></div>
       </div>
       <div class="hero-tag hero-tag-2">
         <div class="badge badge-violet">2</div>
-        <div><strong>Esperás</strong><br><span style="color:var(--ink-3); font-size:12px">unos minutos</span></div>
+        <div class="copy"><strong>Esperás</strong><small>unos minutos</small></div>
       </div>
       <div class="hero-tag hero-tag-3">
         <div class="badge badge-yellow">3</div>
-        <div><strong>Barrés</strong><br><span style="color:var(--ink-3); font-size:12px">y listo</span></div>
+        <div class="copy"><strong>Barrés</strong><small>y listo</small></div>
       </div>
     </div>
   </div>
@@ -964,11 +1199,12 @@
 <section class="demo" id="demo" data-screen-label="02 Demo">
   <div class="container">
     <div class="section-head">
-      <div class="kicker">Demostración</div>
-      <h2 class="h2">Mirá cómo Psweep transforma el pis en gel</h2>
-      <p class="body-lead">En pocos minutos, el líquido deja de ser un problema difícil de limpiar y se convierte en un residuo sólido, fácil de juntar y retirar.</p>
+      <div class="kicker">▶ Vélo en acción</div>
+      <h2 class="h2">Mirá cómo el pis se vuelve <span class="hand" style="color:var(--yellow)">gel sólido</span></h2>
+      <p class="body-lead">30 segundos de video. Después no querés volver a limpiar como antes.</p>
     </div>
     <div class="video-frame">
+      <img class="poster" src="assets/demo-poster.webp" alt="Antes, durante y después de usar Psweep" loading="lazy">
       <div class="play-button" role="button" aria-label="Reproducir video"></div>
       <div class="video-caption">VIDEO — antes / durante / después · 0:32</div>
     </div>
@@ -980,18 +1216,19 @@
 <section class="problem" data-screen-label="03 Problema">
   <div class="container">
     <div class="section-head">
-      <div class="kicker">El problema</div>
-      <h2 class="h2">Limpiar pis de mascotas no debería ser tan desagradable</h2>
-      <p class="body-lead">Si tenés perro o gato, sabés lo molesto que puede ser encontrar orina en el piso, el balcón, el patio o cerca de la cucha. El problema no es solo limpiar: es el olor, la humedad, las bacterias y esa sensación de que la zona nunca queda realmente seca.</p>
+      <div class="kicker">😤 El bardo de siempre</div>
+      <h2 class="h2">Limpiar pis de tu mascota es <span class="hand" style="color:var(--violet)">un quilombo.</span></h2>
+      <p class="body-lead">Sabés bien de qué hablamos. El líquido que se esparce, el olor que queda, el papel que no alcanza, y esa sensación de "ya está pero no del todo".</p>
     </div>
     <div class="pain-grid">
-      <div class="pain-card"><div class="x">×</div><p>El pis se esparce y cuesta juntarlo</p></div>
-      <div class="pain-card"><div class="x">×</div><p>La zona queda húmeda</p></div>
-      <div class="pain-card"><div class="x">×</div><p>Puede quedar olor aunque limpies</p></div>
-      <div class="pain-card"><div class="x">×</div><p>Usás mucho papel o trapos</p></div>
-      <div class="pain-card"><div class="x">×</div><p>La limpieza da asco</p></div>
-      <div class="pain-card"><div class="x">×</div><p>No siempre queda higienizado</p></div>
-      <div class="pain-card"><div class="x">×</div><p>Si no lo limpiás rápido, vuelve a orinar ahí</p></div>
+      <div class="pain-card"><div class="x">💦</div><p>El pis se esparce y cuesta juntarlo</p></div>
+      <div class="pain-card"><div class="x">😬</div><p>La zona queda húmeda y pegajosa</p></div>
+      <div class="pain-card"><div class="x">👃</div><p>Queda olor aunque limpies</p></div>
+      <div class="pain-card"><div class="x">🧻</div><p>Gastás un rollo entero de papel</p></div>
+      <div class="pain-card"><div class="x">🤢</div><p>Limpiar da asco</p></div>
+      <div class="pain-card"><div class="x">🦠</div><p>Nunca queda 100% higiénico</p></div>
+      <div class="pain-card"><div class="x">🔁</div><p>Si no limpiás rápido, vuelve a orinar ahí</p></div>
+      <div class="pain-card"><div class="x">⏰</div><p>Perdés 15 minutos cada vez</p></div>
     </div>
   </div>
 </section>
@@ -999,7 +1236,7 @@
 <!-- ============ PRODUCT INTRO ============ -->
 <section data-screen-label="04 Producto">
   <div class="container intro-grid">
-    <div class="product-card"></div>
+    <div class="product-card"><img src="assets/hero-product.webp" alt="Envase Psweep" loading="lazy"></div>
     <div>
       <div class="kicker">Conocé Psweep</div>
       <h2 class="h2">Psweep convierte el problema en algo fácil de barrer</h2>
@@ -1014,34 +1251,34 @@
 <section class="how" id="how" data-screen-label="05 Cómo funciona">
   <div class="container">
     <div class="section-head">
-      <div class="kicker">Cómo funciona</div>
-      <h2 class="h2">Usarlo es muy simple</h2>
-      <p class="body-lead">Cuatro pasos. Ningún truco. Tu mascota puede haber armado el lío más feo del mundo y resolverlo te va a llevar minutos.</p>
+      <div class="kicker">🪄 Cómo funciona</div>
+      <h2 class="h2">4 pasos. Sin trucos. <span class="hand" style="color:var(--violet)">Listo.</span></h2>
+      <p class="body-lead">Por más feo que sea el desastre, resolverlo te va a llevar literalmente minutos.</p>
     </div>
     <div class="steps">
       <div class="step">
-        <div class="step-illust">[ pis en el piso ]</div>
         <div class="step-num">1</div>
-        <h4>Aplicá Psweep sobre la orina</h4>
-        <p>Espolvoreá el producto directamente sobre la zona húmeda hasta cubrir el líquido.</p>
+        <div class="step-illust"><img src="assets/step-1.webp" alt="Espolvorear Psweep sobre el pis" loading="lazy"></div>
+        <h4>Tirás el polvo</h4>
+        <p>Espolvoreás Psweep directamente sobre el pis hasta cubrirlo bien.</p>
       </div>
       <div class="step">
-        <div class="step-illust">[ polvo absorbiendo ]</div>
         <div class="step-num">2</div>
-        <h4>Esperá unos minutos</h4>
-        <p>Psweep comienza a absorber y solidificar la orina, transformándola en una textura tipo gel.</p>
+        <div class="step-illust"><img src="assets/step-2.webp" alt="El polvo absorbe la orina y la convierte en gel" loading="lazy"></div>
+        <h4>Esperás 2 minutos</h4>
+        <p>El líquido se transforma en un gel sólido. Ni mires, hacé otra cosa.</p>
       </div>
       <div class="step">
-        <div class="step-illust">[ escoba + pala ]</div>
         <div class="step-num">3</div>
-        <h4>Barré y retiralo</h4>
-        <p>Una vez solidificado, podés juntar el residuo fácilmente con escoba, pala, papel o bolsa.</p>
+        <div class="step-illust"><img src="assets/step-3.webp" alt="Barrer el gel solidificado con escoba y pala" loading="lazy"></div>
+        <h4>Barrés y retirás</h4>
+        <p>Lo juntás con escoba y pala. Sin trapos, sin balde, sin esfuerzo.</p>
       </div>
       <div class="step">
-        <div class="step-illust">[ piso seco ]</div>
         <div class="step-num">4</div>
-        <h4>Zona seca y limpia</h4>
-        <p>El área queda seca, sin líquido esparcido y lista para una limpieza final si querés reforzar la higiene.</p>
+        <div class="step-illust"><img src="assets/step-4.webp" alt="Piso seco y limpio con mascotas felices" loading="lazy"></div>
+        <h4>Listo, seco y limpio</h4>
+        <p>Zona seca, sin olor, lista para que tu mascota vuelva a estar.</p>
       </div>
     </div>
   </div>
@@ -1051,8 +1288,9 @@
 <section id="benefits" data-screen-label="06 Beneficios">
   <div class="container">
     <div class="section-head">
-      <div class="kicker">Beneficios</div>
-      <h2 class="h2">La forma más práctica de limpiar accidentes de mascotas</h2>
+      <div class="kicker">💎 Por qué funciona</div>
+      <h2 class="h2">Te ahorra <span class="hand" style="color:var(--teal)">tiempo</span>, ganas y la cabeza.</h2>
+      <p class="body-lead">Pensado para que limpiar deje de ser parte de tu día.</p>
     </div>
     <div class="benefits-grid">
       <div class="benefit">
@@ -1105,15 +1343,15 @@
 <section class="emotional" data-screen-label="07 Emocional">
   <div class="container">
     <div class="section-head" style="margin-bottom: 32px;">
-      <div class="kicker" style="color: var(--yellow)">Para vos y tu mascota</div>
+      <div class="kicker">Para vos y tu mascota</div>
       <h2 class="h2">Porque amar a tu mascota no significa bancarte el desastre</h2>
     </div>
     <p>Tu perro o tu gato pueden ser parte de tu familia, dormir cerca tuyo y alegrarte el día. Pero cuando aparece pis en el piso, el momento se vuelve incómodo. Psweep no busca reemplazar el amor por tu mascota. Busca hacerte más fácil la convivencia.</p>
     <div class="less-more">
-      <div class="lm-card"><div class="lm-label">Menos</div><div class="lm-value">Tiempo limpiando</div></div>
-      <div class="lm-card"><div class="lm-label">Menos</div><div class="lm-value">Olor</div></div>
-      <div class="lm-card"><div class="lm-label">Menos</div><div class="lm-value">Humedad</div></div>
-      <div class="lm-card more"><div class="lm-label">Más</div><div class="lm-value">Tranquilidad</div></div>
+      <div class="lm-card"><div class="lm-label">−</div><div class="lm-value">Tiempo limpiando</div></div>
+      <div class="lm-card"><div class="lm-label">−</div><div class="lm-value">Olor en casa</div></div>
+      <div class="lm-card"><div class="lm-label">−</div><div class="lm-value">Asco diario</div></div>
+      <div class="lm-card more"><div class="lm-label">+</div><div class="lm-value">Tranquilidad</div></div>
     </div>
   </div>
 </section>
@@ -1200,22 +1438,22 @@
     </div>
     <div class="offer-grid">
       <div class="offer-card">
-        <div class="offer-badge">★ Lanzamiento</div>
-        <h3>Psweep — Polvo solidificador</h3>
-        <p class="sub">Para orina de perros y gatos.</p>
+        <div class="offer-badge">⚡ Lanzamiento</div>
+        <h3>Psweep · Polvo solidificador</h3>
+        <p class="sub">El polvo que convierte el pis de tu perro o gato en gel sólido.</p>
         <ul class="feature-list">
-          <li><span class="ok">✓</span><div>Producto solidificador de orina</div></li>
-          <li><span class="ok">✓</span><div>Acción antibacterial</div></li>
-          <li><span class="ok">✓</span><div>Uso rápido y práctico</div></li>
-          <li><span class="ok">✓</span><div>Apto para orina de perros y gatos</div></li>
-          <li><span class="ok">✓</span><div>Ideal para hogares, balcones, patios y espacios con mascotas</div></li>
+          <li><span class="ok">✓</span><div><strong>Solidifica</strong> la orina en 2 minutos</div></li>
+          <li><span class="ok">✓</span><div><strong>Acción antibacterial</strong> de verdad</div></li>
+          <li><span class="ok">✓</span><div>Perros, gatos, cachorros y mascotas mayores</div></li>
+          <li><span class="ok">✓</span><div>Funciona en pisos, balcones, patios y cuchas</div></li>
+          <li><span class="ok">✓</span><div>Sin trapos, sin baldes, sin enchastre</div></li>
         </ul>
-        <a class="btn btn-primary" style="width:100%" href="#">Comprar ahora en Tienda Nube →</a>
-        <p class="offer-cta-note">Compra segura · Stock disponible por tiempo limitado</p>
+        <a class="btn btn-primary btn-xl" style="width:100%" href="#">Comprar en Tienda Nube →</a>
+        <p class="offer-cta-note">🔒 Compra segura · Envíos a todo el país</p>
       </div>
 
       <div class="stock-block">
-        <div class="kicker" style="margin-bottom:8px">Lanzamiento — Stock limitado</div>
+        <div class="kicker">Lanzamiento — Stock limitado</div>
         <h3>Primer lote: 5.000 unidades disponibles</h3>
         <p>Estamos lanzando Psweep con una primera tanda para hogares con mascotas. Una vez agotado este stock inicial, la reposición puede demorar.</p>
         <div class="stock-bar"><div class="stock-bar-fill"></div></div>
@@ -1247,31 +1485,31 @@
     <div class="faq-wrap" id="faq-wrap">
       <div class="faq-item open">
         <button class="faq-q">¿Sirve para perros y gatos?<span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Sí. Psweep está pensado para actuar sobre orina de mascotas, especialmente perros y gatos.</div></div>
+        <div class="faq-a"><div><div class="faq-a-inner">Sí. Psweep está pensado para actuar sobre orina de mascotas, especialmente perros y gatos.</div></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">¿Cuánto tarda en hacer efecto?<span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Actúa en pocos minutos. El tiempo puede variar según la cantidad de líquido y la superficie.</div></div>
+        <div class="faq-a"><div><div class="faq-a-inner">Actúa en pocos minutos. El tiempo puede variar según la cantidad de líquido y la superficie.</div></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">¿Tengo que usar mucho producto?<span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Depende de la cantidad de orina. Lo ideal es cubrir bien la zona húmeda para que el producto pueda absorber y solidificar correctamente.</div></div>
+        <div class="faq-a"><div><div class="faq-a-inner">Depende de la cantidad de orina. Lo ideal es cubrir bien la zona húmeda para que el producto pueda absorber y solidificar correctamente.</div></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">¿Después tengo que limpiar igual?<span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Psweep facilita retirar la orina solidificada y deja la zona seca. Si querés una higiene más profunda, podés repasar después con tu limpiador habitual.</div></div>
+        <div class="faq-a"><div><div class="faq-a-inner">Psweep facilita retirar la orina solidificada y deja la zona seca. Si querés una higiene más profunda, podés repasar después con tu limpiador habitual.</div></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">¿Sirve para pisos, balcones y patios?<span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Sí. Es ideal para superficies donde la orina queda acumulada o visible, como pisos, balcones, patios, cemento o zonas de mascotas.</div></div>
+        <div class="faq-a"><div><div class="faq-a-inner">Sí. Es ideal para superficies donde la orina queda acumulada o visible, como pisos, balcones, patios, cemento o zonas de mascotas.</div></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">¿Elimina bacterias?<span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Psweep tiene acción antibacterial y ayuda a mejorar la higiene de la zona tratada.</div></div>
+        <div class="faq-a"><div><div class="faq-a-inner">Psweep tiene acción antibacterial y ayuda a mejorar la higiene de la zona tratada.</div></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">¿Reemplaza un desinfectante?<span class="icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">No necesariamente. Psweep ayuda a solidificar, retirar la orina y mejorar la limpieza. Para una desinfección profunda, podés complementar con tu producto habitual.</div></div>
+        <div class="faq-a"><div><div class="faq-a-inner">No necesariamente. Psweep ayuda a solidificar, retirar la orina y mejorar la limpieza. Para una desinfección profunda, podés complementar con tu producto habitual.</div></div></div>
       </div>
     </div>
   </div>
@@ -1297,18 +1535,18 @@
       </div>
       <a class="btn btn-yellow" href="#">Consultar compra mayorista →</a>
     </div>
-    <div class="b2b-visual">[ Imagen — display de Psweep en comercio ]</div>
+    <div class="b2b-visual"><img src="assets/b2b-shelf.webp" alt="Display de Psweep en pet shop" loading="lazy"></div>
   </div>
 </section>
 
 <!-- ============ FINAL CTA ============ -->
 <section class="final-cta" data-screen-label="13 CTA Final">
   <div class="container">
-    <div class="kicker" style="color: var(--yellow)">Tu casa, más seca y limpia</div>
-    <h2 class="h2">Hacé que limpiar pis de mascotas sea rápido, seco y fácil</h2>
-    <p>No sigas peleando con papel, trapos y olor. Psweep solidifica la orina, facilita la limpieza y te ayuda a mantener tu casa más seca e higiénica.</p>
-    <a class="btn btn-yellow" href="#" style="font-size: 18px; padding: 20px 36px;">Comprar Psweep ahora →</a>
-    <span class="hand">tirás · esperás · barrés · seguís con tu día</span>
+    <div class="urgency"><span class="live-dot"></span>Solo 1.587 unidades · 68% reservado</div>
+    <h2 class="h2">Dejá de pelearte con el pis.<br>Tirás polvo. Barrés. Seguís con tu día.</h2>
+    <p>Probá Psweep y olvidate de los trapos, los baldes y ese olor que no se va. Sumate al primer lote antes de que se agote.</p>
+    <a class="btn btn-yellow btn-xl" href="#offer">Quiero el mío ahora →</a>
+    <span class="hand">tirás · esperás · barrés · listo 🎉</span>
   </div>
 </section>
 
@@ -1362,9 +1600,54 @@
     btn.addEventListener('click', () => {
       const item = btn.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-      // Close all others
       document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
       if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Scroll-reveal with stagger (Emil principle: stagger 40-80ms)
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const targets = document.querySelectorAll(
+      '.benefit, .step, .pain-card, .use-chip, .lm-card, .faq-item, .ct-row'
+    );
+    targets.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      el.style.transition = 'opacity 540ms cubic-bezier(0.23, 1, 0.32, 1), transform 540ms cubic-bezier(0.23, 1, 0.32, 1)';
+    });
+    const io = new IntersectionObserver((entries) => {
+      // Group entries by parent so stagger resets per section
+      const byParent = new Map();
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const parent = entry.target.parentElement;
+        if (!byParent.has(parent)) byParent.set(parent, []);
+        byParent.get(parent).push(entry.target);
+      });
+      byParent.forEach((els) => {
+        els.forEach((el, i) => {
+          const delay = Math.min(i * 60, 360);
+          setTimeout(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+          }, delay);
+          io.unobserve(el);
+        });
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(el => io.observe(el));
+  }
+
+  // Smooth scroll for in-page anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 </script>
