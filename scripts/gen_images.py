@@ -24,7 +24,9 @@ PROMPTS = {
     "hero-product": (
         "A cute friendly bottle of pet cleaning powder labeled 'Psweep', "
         "teal label with a happy paw print, yellow cap, white powder visible at top. "
-        "Centered on isolated transparent-looking background. Squared aspect. "
+        "PLAIN SOLID OFF-WHITE BACKGROUND (#F7F7F5), no checkered pattern, "
+        "no transparency grid, no decorative tiles around the bottle. "
+        "Just the bottle centered on a single flat background color. Square aspect. "
         f"{STYLE}"
     ),
     "step-1": (

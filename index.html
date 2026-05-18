@@ -382,6 +382,12 @@
 
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { max-width: 360px; }
+    .hero-tag { padding: 12px 16px; font-size: 14px; }
+    .hero-tag .badge { width: 48px; height: 48px; font-size: 22px; }
+    .hero-tag-1 { left: 0%; }
+    .hero-tag-2 { right: 0%; }
+    .hero-tag-3 { left: 14%; }
   }
 
   /* ============ SECTION SHELL ============ */
@@ -819,8 +825,56 @@
   }
   .compare-strong .yellow { color: var(--yellow); background: var(--ink); padding: 0 12px; border-radius: 8px; }
   @media (max-width: 700px) {
-    .ct-row { grid-template-columns: 1fr; }
-    .ct-row > div { border-right: none !important; border-bottom: 1px solid var(--line); }
+    .compare-table { background: transparent; border: none; box-shadow: none; }
+    .ct-row.head { display: none; }
+    .ct-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      background: white;
+      border: 2.5px solid var(--ink);
+      border-bottom: 2.5px solid var(--ink) !important;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 0 0 var(--ink);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .ct-row > div { border: none !important; padding: 14px 18px; }
+    .ct-row > div:first-child {
+      background: var(--bg-soft);
+      font-family: var(--font-pop);
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      padding: 10px 18px;
+    }
+    .ct-row > div:nth-child(2) {
+      position: relative;
+      padding-left: 44px;
+      font-size: 14.5px;
+    }
+    .ct-row > div:nth-child(2)::before {
+      content: "✕";
+      position: absolute; left: 16px; top: 50%;
+      transform: translateY(-50%);
+      color: #D43A3A;
+      font-weight: 900;
+      font-size: 16px;
+    }
+    .ct-row > div:nth-child(3) {
+      position: relative;
+      padding-left: 44px;
+      font-size: 14.5px;
+    }
+    .ct-row > div:nth-child(3)::before {
+      content: "✓";
+      position: absolute; left: 16px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--teal-deep);
+      font-weight: 900;
+      font-size: 18px;
+    }
   }
 
   /* ============ OFFER ============ */
