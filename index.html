@@ -197,7 +197,7 @@
       radial-gradient(900px 500px at -10% 60%, rgba(0,158,155,.16), transparent 60%),
       radial-gradient(700px 400px at 50% 110%, rgba(255,184,0,.12), transparent 70%),
       var(--bg-soft);
-    padding: 56px 0 110px;
+    padding: 48px 0 88px;
   }
   .hero-grid {
     display: grid;
@@ -385,8 +385,8 @@
   }
 
   /* ============ SECTION SHELL ============ */
-  section { padding: 110px 0; }
-  .section-head { max-width: 800px; margin: 0 auto 64px; text-align: center; }
+  section { padding: 80px 0; }
+  .section-head { max-width: 760px; margin: 0 auto 40px; text-align: center; }
   .kicker {
     display: inline-block;
     font-family: var(--font-pop);
@@ -396,9 +396,9 @@
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 6px 14px;
+    padding: 5px 13px;
     border-radius: var(--radius-pill);
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     border: 2px solid var(--ink);
     box-shadow: 0 2px 0 0 var(--ink);
     transform: rotate(-1deg);
@@ -406,10 +406,10 @@
   .h2 {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(32px, 4vw, 50px);
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-    margin: 0 0 16px;
+    font-size: clamp(30px, 3.8vw, 46px);
+    line-height: 1.04;
+    letter-spacing: -0.028em;
+    margin: 0 0 12px;
     text-wrap: balance;
   }
   .h3 {
@@ -419,7 +419,7 @@
     letter-spacing: -0.01em;
     margin: 0 0 8px;
   }
-  .body-lead { font-size: 18px; color: var(--ink-2); margin: 0; text-wrap: pretty; }
+  .body-lead { font-size: 17px; color: var(--ink-2); margin: 0; text-wrap: pretty; line-height: 1.45; }
 
   /* ============ DEMO / VIDEO ============ */
   .demo { background: var(--ink); color: white; }
@@ -480,7 +480,7 @@
   }
   .demo-tagline {
     text-align: center;
-    margin-top: 32px;
+    margin-top: 24px;
     font-family: var(--font-hand);
     font-size: 36px;
     color: var(--yellow);
@@ -492,7 +492,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 18px;
-    margin-top: 48px;
+    margin-top: 8px;
   }
   .pain-card {
     background: white;
@@ -505,16 +505,34 @@
   }
   .pain-card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 0 var(--ink); }
   .pain-card .x {
+    position: relative;
     flex-shrink: 0;
-    width: 56px; height: 56px;
-    border-radius: 16px;
+    width: 64px; height: 64px;
+    border-radius: 18px;
     background: #FFE5E5;
-    color: #D43A3A;
+    border: 2px solid #D43A3A;
+    color: var(--ink);
     display: grid; place-items: center;
-    font-size: 28px;
+    font-size: 32px;
+    line-height: 1;
     transition: transform 200ms var(--ease-out);
+    filter: grayscale(.25);
   }
-  .pain-card:hover .x { transform: rotate(-8deg) scale(1.08); }
+  /* Red X strike overlay — communicates the pain visually */
+  .pain-card .x::before,
+  .pain-card .x::after {
+    content: "";
+    position: absolute;
+    inset: 12% 8%;
+    border-top: 5px solid #E53E3E;
+    border-radius: 4px;
+    transform-origin: center;
+    box-shadow: 0 0 0 1.5px white;
+    pointer-events: none;
+  }
+  .pain-card .x::before { transform: rotate(38deg); top: 50%; }
+  .pain-card .x::after { transform: rotate(-38deg); top: 50%; }
+  .pain-card:hover .x { transform: rotate(-6deg) scale(1.08); filter: grayscale(0); }
   .pain-card p { margin: 0; font-size: 15.5px; color: var(--ink); line-height: 1.35; font-weight: 600; }
 
   /* ============ PRODUCT INTRO ============ */
@@ -681,11 +699,11 @@
       radial-gradient(800px 400px at 80% 20%, rgba(111,74,255,.12), transparent 60%),
       var(--violet-deep);
     color: white;
-    padding: 120px 0;
+    padding: 88px 0;
   }
-  .emotional .h2 { color: white; max-width: 800px; margin: 0 auto 24px; }
+  .emotional .h2 { color: white; max-width: 800px; margin: 0 auto 16px; }
   .emotional .kicker { background: var(--yellow); color: var(--ink); border-color: var(--yellow); box-shadow: 0 2px 0 0 rgba(0,0,0,.4); }
-  .emotional p { color: rgba(255,255,255,.8); max-width: 640px; margin: 0 auto 40px; text-align: center; font-size: 18px; }
+  .emotional p { color: rgba(255,255,255,.85); max-width: 640px; margin: 0 auto 32px; text-align: center; font-size: 17px; }
   .less-more {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -758,7 +776,7 @@
   .use-chip:nth-child(3n+3) .check { background: var(--yellow); color: var(--ink); }
   .uses-closing {
     text-align: center;
-    margin-top: 56px;
+    margin-top: 36px;
     font-size: 18px;
     color: var(--ink-2);
     max-width: 720px;
@@ -791,7 +809,7 @@
   .ct-row.head > div:nth-child(3) { background: var(--teal); color: white; }
   .compare-strong {
     text-align: center;
-    margin-top: 48px;
+    margin-top: 32px;
     font-family: var(--font-pop);
     font-weight: 800;
     font-size: clamp(24px, 3vw, 36px);
@@ -1034,7 +1052,7 @@
     background: var(--teal);
     color: white;
     text-align: center;
-    padding: 120px 0;
+    padding: 88px 0;
     position: relative;
     overflow: hidden;
   }
@@ -1055,9 +1073,9 @@
     pointer-events: none;
   }
   .final-cta > * { position: relative; }
-  .final-cta .h2 { color: white; max-width: 880px; margin: 0 auto 20px; font-weight: 900; }
-  .final-cta p { color: rgba(255,255,255,.92); font-size: 20px; max-width: 620px; margin: 0 auto 40px; font-weight: 500; }
-  .final-cta .hand { color: var(--yellow); display: block; margin-top: 32px; font-size: 38px; transform: rotate(-2deg); }
+  .final-cta .h2 { color: white; max-width: 880px; margin: 0 auto 14px; font-weight: 900; }
+  .final-cta p { color: rgba(255,255,255,.92); font-size: 18px; max-width: 620px; margin: 0 auto 28px; font-weight: 500; }
+  .final-cta .hand { color: var(--yellow); display: block; margin-top: 24px; font-size: 34px; transform: rotate(-2deg); }
   .final-cta .urgency {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(255,255,255,.15);
@@ -1469,7 +1487,7 @@
 </section>
 
 <!-- Quote line -->
-<section style="padding: 64px 0; background: var(--bg-soft);">
+<section style="padding: 48px 0; background: var(--bg-soft);">
   <div class="container">
     <p class="quote-line">no limpies el pis. <span class="em">solidificalo</span> y barrélo.</p>
   </div>
