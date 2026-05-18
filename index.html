@@ -518,20 +518,20 @@
     transition: transform 200ms var(--ease-out);
     filter: grayscale(.25);
   }
-  /* Red X strike overlay — communicates the pain visually */
+  /* Red X strike overlay — clean centered cross */
   .pain-card .x::before,
   .pain-card .x::after {
     content: "";
     position: absolute;
-    inset: 12% 8%;
-    border-top: 5px solid #E53E3E;
-    border-radius: 4px;
-    transform-origin: center;
-    box-shadow: 0 0 0 1.5px white;
+    left: 50%; top: 50%;
+    width: 80%;
+    height: 5px;
+    background: #E53E3E;
+    border-radius: 3px;
     pointer-events: none;
   }
-  .pain-card .x::before { transform: rotate(38deg); top: 50%; }
-  .pain-card .x::after { transform: rotate(-38deg); top: 50%; }
+  .pain-card .x::before { transform: translate(-50%, -50%) rotate(45deg); }
+  .pain-card .x::after { transform: translate(-50%, -50%) rotate(-45deg); }
   .pain-card:hover .x { transform: rotate(-6deg) scale(1.08); filter: grayscale(0); }
   .pain-card p { margin: 0; font-size: 15.5px; color: var(--ink); line-height: 1.35; font-weight: 600; }
 
