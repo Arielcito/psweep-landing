@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generate Psweep landing images with Gemini 2.5 Flash Image (nano-banana)."""
+"""Generate Psweep landing images with Gemini 2.5 Flash Image (nano-banana).
+
+Realistic / photorealistic variant. Reuses the same filenames as the cartoon
+set so the HTML doesn't need updating.
+"""
 import os, sys, json, base64, pathlib, urllib.request, urllib.error, time
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
@@ -12,56 +16,61 @@ ENDPOINT = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:gen
 OUT_DIR = pathlib.Path(__file__).parent.parent / "assets" / "generated"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Style brief — keep cohesive across all images
+# Style brief — keep cohesive across all images. PHOTOREALISTIC variant.
 STYLE = (
-    "Flat 2D illustration, friendly cartoon style, bold thick black outlines, "
-    "vibrant brand palette: teal (#009E9B), violet (#6F4AFF), yellow (#FFB800), "
-    "off-white background (#F7F7F5). Cheerful, modern, playful, NOT clinical, "
-    "NOT pharmacy-like. Inspired by Duolingo / Notion mascots. No text in the image."
+    "Photorealistic, high quality product photography, natural soft daylight, "
+    "shallow depth of field, clean modern Argentine home aesthetic, "
+    "warm neutral tones with subtle teal accents, premium commercial feel. "
+    "NOT illustration, NOT cartoon, NOT 3D render. Real-world camera look, "
+    "as if shot on a Sony A7 with 50mm prime lens. No text overlays in image."
 )
 
 PROMPTS = {
     "hero-product": (
-        "A cute friendly bottle of pet cleaning powder labeled 'Psweep', "
-        "teal label with a happy paw print, yellow cap, white powder visible at top. "
-        "PLAIN SOLID OFF-WHITE BACKGROUND (#F7F7F5), no checkered pattern, "
-        "no transparency grid, no decorative tiles around the bottle. "
-        "Just the bottle centered on a single flat background color. Square aspect. "
+        "Product photography of a white plastic bottle of pet cleaning powder, "
+        "matte finish, teal label with a minimal paw-print logo and the word 'Psweep' subtle, "
+        "yellow screw cap. Centered on a plain off-white seamless studio background (#F7F7F5). "
+        "Soft top-left lighting, gentle drop shadow under the bottle. Square framing. "
         f"{STYLE}"
     ),
     "step-1": (
-        "A hand tipping a teal bottle, sprinkling white powder onto a small puddle on a tile floor, "
-        "happy cartoon dog watching curiously from the side. Top-down 3/4 view. "
+        "Close-up overhead photograph: a hand sprinkling fine white absorbent powder "
+        "out of an open teal bottle onto a small puddle of yellow-tinted liquid on a "
+        "light grey ceramic tile floor. The powder is mid-air, caught in motion. "
+        "Modern Argentine home setting, slightly blurred wooden floor in background. "
         f"{STYLE}"
     ),
     "step-2": (
-        "A small puddle on tile floor turning into solid white gel chunks, "
-        "sparkles and tiny stars around indicating transformation magic, "
-        "a clock icon showing 2 minutes floating above. "
+        "Close-up macro photograph of a tile floor where a small puddle has been transformed "
+        "into solid pale-white gel granules and clumps — the absorbent material has reacted. "
+        "Light grey ceramic tile, soft natural daylight from a window, no liquid visible anymore. "
         f"{STYLE}"
     ),
     "step-3": (
-        "A cheerful broom and yellow dustpan sweeping solid white gel chunks off a tile floor, "
-        "motion lines indicating easy sweeping action. "
+        "Photograph of a wooden broom and a metal dustpan on a clean ceramic tile floor, "
+        "sweeping pale-white solidified gel granules into the dustpan. Action shot from "
+        "side-low angle, slight motion blur on the broom bristles. Modern home interior. "
         f"{STYLE}"
     ),
     "step-4": (
-        "A perfectly clean dry tile floor with a happy smiling dog and a happy cat sitting together, "
-        "sparkles on the floor showing cleanliness, sun rays in soft yellow. "
+        "Photograph of a friendly golden retriever and a calm grey cat sitting together "
+        "on a perfectly clean dry tile floor in a sunlit modern living room. "
+        "Soft window light from the left, warm and inviting. Floor is spotless. "
         f"{STYLE}"
     ),
     "b2b-shelf": (
-        "A modern pet shop retail shelf display with multiple Psweep bottles neatly aligned in rows, "
-        "warm friendly lighting, price tags, a small 'NEW' burst label, "
-        "wooden shelf base, friendly cartoon illustration. "
+        "Photograph of a modern pet shop retail shelf with multiple identical bottles "
+        "of Psweep (teal label, yellow cap) arranged in neat rows. Wooden shelving, "
+        "warm overhead store lighting, a small price tag visible. Crisp focus on front row, "
+        "soft bokeh in background. Wide horizontal framing. "
         f"{STYLE}"
     ),
     "demo-poster": (
-        "Three-panel before/during/after illustration on a single image: "
-        "LEFT panel shows a puddle on floor with a worried cat emoji; "
-        "MIDDLE panel shows powder being sprinkled with sparkles; "
-        "RIGHT panel shows clean floor with happy pet. "
-        "Wide 16:9 cinematic aspect. Bold borders dividing the panels. "
+        "Photographic triptych on a single horizontal image, 3 panels divided by thin white gaps: "
+        "LEFT panel — a small yellow puddle on a grey tile floor with a curious dog in the background, "
+        "MIDDLE panel — a hand sprinkling white powder onto that same puddle, "
+        "RIGHT panel — same tile floor now completely dry and clean with a happy dog sitting on it. "
+        "Cohesive lighting and tile across all 3 panels. Wide cinematic 16:9 framing. "
         f"{STYLE}"
     ),
 }
