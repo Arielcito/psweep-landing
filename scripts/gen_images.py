@@ -56,17 +56,17 @@ STYLE = (
 # Each entry: (prompt, list of reference parts to include)
 PROMPTS = {
     "hero-product": (
-        f"Hero product photograph of {PRODUCT} as the dominant subject — "
-        "the bottle must occupy AT LEAST 60% of the frame height, large and "
-        "fully visible from cap to base, upright, label facing the camera, "
-        "perfectly centered in the composition. "
-        "Background is a softly blurred pet supply store scene (wooden shelves "
-        "with pet food bags, toys, accessories) — strong bokeh, the store is "
-        "ONLY context, the bottle is the star. "
-        "Square 1:1 framing. No text overlays, no other products in focus, no "
-        "tags or labels covering the bottle. Plenty of headroom above the cap "
-        "and floor space below the base so nothing gets cropped. "
-        f"{STYLE}",
+        f"Hero product photograph of {PRODUCT} as the absolute dominant subject. "
+        "The bottle MUST occupy 75-85% of the frame height, fully visible from "
+        "cap top to base bottom, perfectly centered both horizontally AND "
+        "vertically. The label 'P-SWEEP' with paw prints must be SHARP, LARGE, "
+        "and PERFECTLY READABLE — the label is the focal point of the entire image. "
+        "Background is heavily blurred bokeh of a pet store (warm colors, "
+        "soft shapes only — not identifiable products). Maximum aperture blur. "
+        "Square 1:1 framing. The bottle base sits on a clean flat surface. "
+        "Small even margin around the bottle on all sides (about 10% padding) "
+        "so no part of the bottle gets cut. No other products in focus, no "
+        "shelves visible sharp, no overlays.",
         [PRIMARY_PART],
     ),
     "product-in-action": (
