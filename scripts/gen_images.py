@@ -19,8 +19,9 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Reference images of the real product
 REF_DIR = ROOT / "assets" / "reference"
-REF_PRIMARY = REF_DIR / "product-stacked.png"   # clear front-facing label
-REF_IN_USE = REF_DIR / "product-in-use.png"     # in-context shot on tile floor
+REF_PRIMARY = REF_DIR / "product-stacked.png"           # clear front-facing label
+REF_IN_USE = REF_DIR / "product-in-use.png"             # in-context shot on tile floor
+REF_SHELF_STYLE = REF_DIR / "shelf-premium-style.png"   # premium shelf style ref
 
 def load_ref(path: pathlib.Path) -> dict:
     return {
@@ -32,6 +33,7 @@ def load_ref(path: pathlib.Path) -> dict:
 
 PRIMARY_PART = load_ref(REF_PRIMARY)
 IN_USE_PART = load_ref(REF_IN_USE)
+SHELF_STYLE_PART = load_ref(REF_SHELF_STYLE)
 
 # Product description repeated in every prompt — anchors the model to the real bottle
 PRODUCT = (
@@ -54,20 +56,35 @@ STYLE = (
 # Each entry: (prompt, list of reference parts to include)
 PROMPTS = {
     "hero-product": (
-        f"Studio product photograph of {PRODUCT} "
-        "Centered on a plain off-white seamless studio background (#F7F7F5). "
-        "Soft top-left lighting, gentle drop shadow under the bottle, "
-        "single bottle only, perfectly upright, label facing the camera. "
-        "Square framing, clean and minimal. "
+        f"Lifestyle product photograph of {PRODUCT} "
+        "displayed in the foreground of a pet supply store. "
+        "Sharp focus on the single upright bottle, label facing the camera. "
+        "Background is a softly blurred pet shop scene: wooden shelves stocked "
+        "with colorful pet food bags, dog toys, leashes, treats and accessories. "
+        "Warm store lighting, shallow depth of field bokeh in the background, "
+        "natural shop atmosphere — clearly a retail pet store, not a home. "
+        "Square framing, bottle centered, no text overlays. "
         f"{STYLE}",
         [PRIMARY_PART],
     ),
+    "product-in-action": (
+        f"Photograph of {PRODUCT} tipped on its side on a light grey ceramic "
+        "tile floor, actively spilling pale off-white absorbent powder onto a "
+        "spreading yellow puddle of pet urine. The powder is reacting with the "
+        "liquid — partially absorbed, forming clumps where it meets the puddle. "
+        "Bottle slightly off-center, action shot from a low 3/4 angle. "
+        "Modern Argentine home interior softly blurred in background, warm light. "
+        f"{STYLE}",
+        [PRIMARY_PART, IN_USE_PART],
+    ),
     "step-1": (
-        f"Close-up overhead photograph: a hand tipping {PRODUCT} "
-        "sideways and sprinkling fine off-white absorbent powder out of the "
-        "open bottle onto a small puddle of yellow-tinted liquid on a light "
-        "grey ceramic tile floor. Powder mid-air, caught in motion. "
-        "Modern Argentine home interior background, softly blurred. "
+        "Close-up overhead photograph of a clearly visible bright yellow puddle "
+        "of pet urine on a light grey ceramic tile floor. A hand enters from the "
+        f"top right of the frame, tipping {PRODUCT} sideways and sprinkling fine "
+        "off-white absorbent powder out of the open bottle directly onto the puddle. "
+        "Powder mid-air, caught in motion. The yellow urine puddle must be the "
+        "MAIN visible element — large, golden-yellow, with a clear glossy surface "
+        "and visible edges on the tile. Modern Argentine home, blurred background. "
         f"{STYLE}",
         [PRIMARY_PART, IN_USE_PART],
     ),
@@ -99,13 +116,17 @@ PROMPTS = {
         [PRIMARY_PART],
     ),
     "b2b-shelf": (
-        f"Photograph of a modern pet shop retail shelf with multiple identical "
-        f"bottles of {PRODUCT} arranged in neat rows on a wooden shelf. "
-        "All bottles must be the exact same P-SWEEP product, same teal label. "
-        "Warm overhead store lighting, a small price tag visible on the shelf edge. "
-        "Crisp focus on the front row, soft bokeh in background. "
-        "Wide horizontal framing. "
-        f"{STYLE}",
+        "Premium retail shelf photograph: modern wooden shelves with warm strip "
+        "LED lights mounted underneath each shelf, soft bokeh of a pet store in "
+        "the background, low-angle three-quarter perspective showing two rows of "
+        f"product. Every single bottle on the shelves must be {PRODUCT} — IDENTICAL "
+        "bottles aligned in neat rows, no other products visible. "
+        "CRITICAL: the bottles must have a WHITE screw cap (NOT yellow, NOT any "
+        "other color — pure WHITE plastic cap), white cylindrical body, and the "
+        "teal/dark-cyan label with 'P-SWEEP' in orange/yellow letters and "
+        "lavender paw prints exactly as shown in the reference. "
+        "NO price tags, NO shelf-edge labels, NO text overlays anywhere. "
+        "Premium pet store aesthetic, shallow depth of field, square framing.",
         [PRIMARY_PART],
     ),
     "demo-poster": (
