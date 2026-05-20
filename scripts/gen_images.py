@@ -56,14 +56,16 @@ STYLE = (
 # Each entry: (prompt, list of reference parts to include)
 PROMPTS = {
     "hero-product": (
-        f"Lifestyle product photograph of {PRODUCT} "
-        "displayed in the foreground of a pet supply store. "
-        "Sharp focus on the single upright bottle, label facing the camera. "
-        "Background is a softly blurred pet shop scene: wooden shelves stocked "
-        "with colorful pet food bags, dog toys, leashes, treats and accessories. "
-        "Warm store lighting, shallow depth of field bokeh in the background, "
-        "natural shop atmosphere — clearly a retail pet store, not a home. "
-        "Square framing, bottle centered, no text overlays. "
+        f"Hero product photograph of {PRODUCT} as the dominant subject — "
+        "the bottle must occupy AT LEAST 60% of the frame height, large and "
+        "fully visible from cap to base, upright, label facing the camera, "
+        "perfectly centered in the composition. "
+        "Background is a softly blurred pet supply store scene (wooden shelves "
+        "with pet food bags, toys, accessories) — strong bokeh, the store is "
+        "ONLY context, the bottle is the star. "
+        "Square 1:1 framing. No text overlays, no other products in focus, no "
+        "tags or labels covering the bottle. Plenty of headroom above the cap "
+        "and floor space below the base so nothing gets cropped. "
         f"{STYLE}",
         [PRIMARY_PART],
     ),
