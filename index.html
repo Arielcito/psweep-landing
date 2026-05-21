@@ -1523,7 +1523,6 @@
         </svg>
         Click para verlo grande
       </span>
-      <div class="video-caption">DEMO · 0:10 · loop</div>
     </div>
     <p class="demo-tagline">de líquido incómodo a gel fácil de barrer.</p>
   </div>
@@ -2016,6 +2015,23 @@
       setInlineMuted(!video.muted);
       if (!video.muted) video.play().catch(() => {});
     });
+
+    // Unmute on first user interaction (browsers block unmuted autoplay).
+    const unmuteOnInteraction = () => {
+      if (!video.muted) return;
+      setInlineMuted(false);
+      video.play().catch(() => {
+        // If unmuted playback is rejected, revert silently.
+        setInlineMuted(true);
+        video.play().catch(() => {});
+      });
+    };
+    const interactionEvents = ['pointerdown', 'touchstart', 'keydown', 'scroll', 'wheel'];
+    const onFirstInteraction = () => {
+      unmuteOnInteraction();
+      interactionEvents.forEach(ev => window.removeEventListener(ev, onFirstInteraction, { capture: true }));
+    };
+    interactionEvents.forEach(ev => window.addEventListener(ev, onFirstInteraction, { capture: true, passive: true, once: false }));
 
     const openModal = () => {
       if (modal.open) return;
