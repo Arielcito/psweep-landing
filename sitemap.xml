@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://psweep-landing.vercel.app/</loc>
     <lastmod>2026-05-21</lastmod>
@@ -20,5 +21,15 @@
       <image:loc>https://psweep-landing.vercel.app/assets/og-image.jpg</image:loc>
       <image:title>Psweep — antes, durante y después</image:title>
     </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://psweep-landing.vercel.app/assets/demo-poster.jpg</video:thumbnail_loc>
+      <video:title>Cómo funciona Psweep — demo de solidificación rápida</video:title>
+      <video:description>Demo en video de Psweep convirtiendo la orina de una mascota en un gel sólido fácil de barrer en menos de un minuto.</video:description>
+      <video:content_loc>https://psweep-landing.vercel.app/assets/demo.mp4</video:content_loc>
+      <video:duration>10</video:duration>
+      <video:publication_date>2026-05-21T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+    </video:video>
   </url>
 </urlset>

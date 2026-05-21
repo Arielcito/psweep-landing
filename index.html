@@ -112,7 +112,25 @@
         "itemCondition": "https://schema.org/NewCondition",
         "areaServed": "AR",
         "seller": { "@id": "https://psweep-landing.vercel.app/#organization" }
-      }
+      },
+      "video": { "@id": "https://psweep-landing.vercel.app/#demo-video" }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://psweep-landing.vercel.app/#demo-video",
+      "name": "Cómo funciona Psweep — demo de solidificación rápida",
+      "description": "Demo en video de Psweep convirtiendo la orina de una mascota en un gel sólido fácil de barrer en menos de un minuto.",
+      "thumbnailUrl": [
+        "https://psweep-landing.vercel.app/assets/demo-poster.jpg",
+        "https://psweep-landing.vercel.app/assets/demo-poster.webp"
+      ],
+      "uploadDate": "2026-05-21",
+      "duration": "PT10S",
+      "contentUrl": "https://psweep-landing.vercel.app/assets/demo.mp4",
+      "embedUrl": "https://psweep-landing.vercel.app/#demo",
+      "inLanguage": "es-AR",
+      "isFamilyFriendly": true,
+      "publisher": { "@id": "https://psweep-landing.vercel.app/#organization" }
     }
   ]
 }
@@ -556,45 +574,41 @@
     overflow: hidden;
     box-shadow: 0 10px 0 0 var(--yellow);
   }
-  .video-frame img.poster {
+  .video-frame video.demo-video {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    opacity: .85;
+    background: #1f1f24;
   }
-  .video-frame::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(0,0,0,.0) 0%, rgba(0,0,0,.55) 80%);
-    pointer-events: none;
-  }
-  .video-frame > .play-button, .video-frame > .video-caption { position: relative; z-index: 2; }
-  .play-button {
-    width: 96px; height: 96px;
-    border-radius: 50%;
-    background: var(--yellow);
-    display: grid; place-items: center;
+  .video-frame video.demo-video::-webkit-media-controls-overlay-play-button { display: none; }
+  .video-unmute {
+    position: absolute; top: 16px; right: 16px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 40px; padding: 0 14px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    border: 1px solid rgba(255,255,255,.18);
     cursor: pointer;
-    transition: transform .2s;
-    box-shadow: 0 0 0 12px rgba(255,184,0,.25);
+    transition: transform 220ms var(--ease-out), background 220ms;
   }
-  .play-button:hover { transform: scale(1.08); }
-  .play-button::after {
-    content: "";
-    width: 0; height: 0;
-    border-left: 24px solid var(--ink);
-    border-top: 16px solid transparent;
-    border-bottom: 16px solid transparent;
-    margin-left: 6px;
-  }
+  .video-unmute:hover { background: var(--yellow); color: var(--ink); transform: scale(1.04); border-color: var(--yellow); }
+  .video-unmute svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .video-unmute.is-unmuted { background: rgba(255,184,0,.18); border-color: var(--yellow); color: var(--yellow); }
   .video-caption {
-    position: absolute; bottom: 24px; left: 24px;
+    position: absolute; bottom: 16px; left: 16px; z-index: 3;
     font-family: ui-monospace, monospace;
     font-size: 12px;
-    color: rgba(255,255,255,.6);
-    background: rgba(255,255,255,.08);
+    color: rgba(255,255,255,.85);
+    background: rgba(0,0,0,.55);
     padding: 6px 12px;
     border-radius: 6px;
+    pointer-events: none;
   }
   .demo-tagline {
     text-align: center;
@@ -1388,9 +1402,25 @@
       <p class="body-lead">30 segundos de video. Después no querés volver a limpiar como antes.</p>
     </div>
     <div class="video-frame">
-      <img class="poster" src="assets/demo-poster.webp" alt="Antes, durante y después de usar Psweep" width="1344" height="768" loading="lazy" decoding="async">
-      <div class="play-button" role="button" aria-label="Reproducir video"></div>
-      <div class="video-caption">VIDEO — antes / durante / después · 0:32</div>
+      <video class="demo-video"
+             id="demo-video"
+             poster="assets/demo-poster.webp"
+             width="1280" height="720"
+             autoplay muted loop playsinline preload="metadata"
+             aria-label="Demo de Psweep solidificando orina de mascota">
+        <source src="assets/demo.webm" type="video/webm">
+        <source src="assets/demo.mp4" type="video/mp4">
+        <img src="assets/demo-poster.jpg" alt="Antes, durante y después de usar Psweep" width="1280" height="720">
+      </video>
+      <button class="video-unmute" id="demo-unmute" type="button" aria-label="Activar sonido del video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 5 6 9H2v6h4l5 4z"></path>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <span class="vu-label">Tocá para escuchar</span>
+      </button>
+      <div class="video-caption">DEMO · 0:10 · loop</div>
     </div>
     <p class="demo-tagline">de líquido incómodo a gel fácil de barrer.</p>
   </div>
@@ -1848,6 +1878,35 @@
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
+
+  // Demo video: toggle unmute + native controls on user gesture
+  (() => {
+    const video = document.getElementById('demo-video');
+    const btn = document.getElementById('demo-unmute');
+    if (!video || !btn) return;
+    const label = btn.querySelector('.vu-label');
+    const setMuted = (muted) => {
+      video.muted = muted;
+      video.controls = !muted;
+      btn.classList.toggle('is-unmuted', !muted);
+      if (label) label.textContent = muted ? 'Tocá para escuchar' : 'Silenciar';
+      btn.setAttribute('aria-label', muted ? 'Activar sonido del video' : 'Silenciar video');
+    };
+    btn.addEventListener('click', () => {
+      setMuted(!video.muted);
+      if (!video.muted) video.play().catch(() => {});
+    });
+    // Pause when out of viewport to save bandwidth
+    if ('IntersectionObserver' in window) {
+      const vo = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) video.play().catch(() => {});
+          else video.pause();
+        });
+      }, { threshold: 0.25 });
+      vo.observe(video);
+    }
+  })();
 </script>
 
 </body>
