@@ -579,8 +579,87 @@
     width: 100%; height: 100%;
     object-fit: cover;
     background: #1f1f24;
+    cursor: zoom-in;
   }
   .video-frame video.demo-video::-webkit-media-controls-overlay-play-button { display: none; }
+  .video-expand-hint {
+    position: absolute; top: 16px; left: 16px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 32px; padding: 0 12px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    border: 1px solid rgba(255,255,255,.18);
+    pointer-events: none;
+    letter-spacing: .02em;
+  }
+  .video-expand-hint svg { width: 14px; height: 14px; }
+
+  /* ============ VIDEO MODAL ============ */
+  .video-modal {
+    border: none;
+    padding: 0;
+    margin: auto;
+    max-width: min(92vw, 1280px);
+    max-height: 92vh;
+    width: 100%;
+    background: transparent;
+    overflow: visible;
+  }
+  .video-modal::backdrop {
+    background: rgba(10,10,15,.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: vm-fade 220ms var(--ease-out);
+  }
+  .video-modal[open] .vm-inner {
+    animation: vm-pop 280ms var(--ease-out) both;
+  }
+  @keyframes vm-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes vm-pop {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .vm-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0a0a0f;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -10px rgba(0,0,0,.7), 0 0 0 2.5px var(--yellow);
+  }
+  .vm-inner video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #000;
+  }
+  .vm-close {
+    position: absolute; top: -52px; right: 0;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    color: white;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 200ms, transform 200ms var(--ease-out);
+    display: grid; place-items: center;
+  }
+  .vm-close:hover { background: var(--yellow); color: var(--ink); transform: rotate(90deg) scale(1.06); border-color: var(--yellow); }
+  @media (max-width: 640px) {
+    .vm-close { top: auto; bottom: -52px; right: 50%; transform: translateX(50%); }
+    .vm-close:hover { transform: translateX(50%) rotate(90deg) scale(1.06); }
+  }
+  body.modal-open { overflow: hidden; }
   .video-unmute {
     position: absolute; top: 16px; right: 16px; z-index: 3;
     display: inline-flex; align-items: center; gap: 8px;
@@ -1420,6 +1499,13 @@
         </svg>
         <span class="vu-label">Tocá para escuchar</span>
       </button>
+      <span class="video-expand-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path>
+          <path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path>
+        </svg>
+        Click para verlo grande
+      </span>
       <div class="video-caption">DEMO · 0:10 · loop</div>
     </div>
     <p class="demo-tagline">de líquido incómodo a gel fácil de barrer.</p>
@@ -1778,6 +1864,17 @@
 
 </main>
 
+<!-- ============ VIDEO MODAL ============ -->
+<dialog class="video-modal" id="video-modal" aria-label="Demo de Psweep en grande">
+  <div class="vm-inner">
+    <button class="vm-close" id="vm-close" type="button" aria-label="Cerrar video">×</button>
+    <video id="vm-video" controls playsinline preload="none" poster="assets/demo-poster.jpg">
+      <source src="assets/demo.webm" type="video/webm">
+      <source src="assets/demo.mp4" type="video/mp4">
+    </video>
+  </div>
+</dialog>
+
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="container">
@@ -1879,27 +1976,81 @@
     });
   });
 
-  // Demo video: toggle unmute + native controls on user gesture
+  // Demo video: inline unmute + modal fullscreen
   (() => {
     const video = document.getElementById('demo-video');
     const btn = document.getElementById('demo-unmute');
-    if (!video || !btn) return;
+    const modal = document.getElementById('video-modal');
+    const modalVideo = document.getElementById('vm-video');
+    const modalClose = document.getElementById('vm-close');
+    if (!video || !btn || !modal || !modalVideo) return;
+
     const label = btn.querySelector('.vu-label');
-    const setMuted = (muted) => {
+    const setInlineMuted = (muted) => {
       video.muted = muted;
       video.controls = !muted;
       btn.classList.toggle('is-unmuted', !muted);
       if (label) label.textContent = muted ? 'Tocá para escuchar' : 'Silenciar';
       btn.setAttribute('aria-label', muted ? 'Activar sonido del video' : 'Silenciar video');
     };
-    btn.addEventListener('click', () => {
-      setMuted(!video.muted);
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setInlineMuted(!video.muted);
       if (!video.muted) video.play().catch(() => {});
     });
-    // Pause when out of viewport to save bandwidth
+
+    const openModal = () => {
+      if (modal.open) return;
+      video.pause();
+      try {
+        modalVideo.currentTime = video.currentTime || 0;
+      } catch (_) { /* noop */ }
+      modalVideo.muted = false;
+      document.body.classList.add('modal-open');
+      if (typeof modal.showModal === 'function') {
+        modal.showModal();
+      } else {
+        modal.setAttribute('open', '');
+      }
+      modalVideo.play().catch(() => {
+        modalVideo.muted = true;
+        modalVideo.play().catch(() => {});
+      });
+    };
+
+    const closeModal = () => {
+      modalVideo.pause();
+      modalVideo.currentTime = 0;
+      document.body.classList.remove('modal-open');
+      if (typeof modal.close === 'function' && modal.open) {
+        modal.close();
+      } else {
+        modal.removeAttribute('open');
+      }
+      // Resume inline (muted) if visible
+      if (video.getBoundingClientRect().top < window.innerHeight) {
+        video.play().catch(() => {});
+      }
+    };
+
+    video.addEventListener('click', openModal);
+    modalClose.addEventListener('click', closeModal);
+
+    // Backdrop click: <dialog> closes on click outside content
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    modal.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      closeModal();
+    });
+
+    // Pause inline when out of viewport (save bandwidth)
     if ('IntersectionObserver' in window) {
       const vo = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+          if (modal.open) return;
           if (entry.isIntersecting) video.play().catch(() => {});
           else video.pause();
         });
