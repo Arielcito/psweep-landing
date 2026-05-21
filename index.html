@@ -368,11 +368,15 @@
   .h1 {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(34px, 6.2vw, 74px);
-    line-height: 1.02;
-    letter-spacing: -0.032em;
+    font-size: clamp(30px, 7.2vw, 74px);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
     margin: 0 0 22px;
     text-wrap: balance;
+  }
+  @media (max-width: 540px) {
+    .h1 { text-wrap: pretty; }
+    .h1 br { display: none; }
   }
   .h1 .accent {
     background: linear-gradient(180deg, transparent 64%, var(--yellow) 64%);
