@@ -3,29 +3,29 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
-    <loc>https://psweep-landing.vercel.app/</loc>
+    <loc>https://p-sweep.com.ar/</loc>
     <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://psweep-landing.vercel.app/assets/hero-product.webp</image:loc>
+      <image:loc>https://p-sweep.com.ar/assets/hero-product.webp</image:loc>
       <image:title>Envase Psweep — polvo solidificador de orina</image:title>
       <image:caption>Envase de Psweep, polvo solidificador de orina de mascotas</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://psweep-landing.vercel.app/assets/product-in-action.webp</image:loc>
+      <image:loc>https://p-sweep.com.ar/assets/product-in-action.webp</image:loc>
       <image:title>Psweep en acción</image:title>
       <image:caption>Psweep solidificando orina sobre un piso</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://psweep-landing.vercel.app/assets/og-image.jpg</image:loc>
+      <image:loc>https://p-sweep.com.ar/assets/og-image.jpg</image:loc>
       <image:title>Psweep — antes, durante y después</image:title>
     </image:image>
     <video:video>
-      <video:thumbnail_loc>https://psweep-landing.vercel.app/assets/demo-poster.jpg</video:thumbnail_loc>
+      <video:thumbnail_loc>https://p-sweep.com.ar/assets/demo-poster.jpg</video:thumbnail_loc>
       <video:title>Cómo funciona Psweep — demo de solidificación rápida</video:title>
       <video:description>Demo en video de Psweep convirtiendo la orina de una mascota en un gel sólido fácil de barrer en menos de un minuto.</video:description>
-      <video:content_loc>https://psweep-landing.vercel.app/assets/demo.mp4</video:content_loc>
+      <video:content_loc>https://p-sweep.com.ar/assets/demo.mp4</video:content_loc>
       <video:duration>10</video:duration>
       <video:publication_date>2026-05-21T00:00:00+00:00</video:publication_date>
       <video:family_friendly>yes</video:family_friendly>
