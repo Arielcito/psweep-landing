@@ -1,19 +1,19 @@
-# Psweep
+# P-sweep
 
-> Psweep es un polvo absorbente argentino que convierte la orina de perros y gatos en un gel sólido fácil de retirar con escoba y pala. Acción antibacterial. Apto para pisos, balcones, patios, cemento y cuchas.
+> P-sweep es un polvo absorbente argentino que convierte la orina de perros y gatos en un gel sólido fácil de retirar con escoba y pala. Acción antibacterial. Apto para pisos, balcones, patios, cemento y cuchas.
 
-Sitio: https://psweep-landing.vercel.app/
-Contacto: hola@psweep.com.ar
+Sitio: https://p-sweep.com.ar/
+Contacto: hola@p-sweep.com.ar
 País: Argentina
 Idioma: Español (es-AR)
 
-## Qué es Psweep
+## Qué es P-sweep
 
-Psweep es un producto de limpieza para hogares con mascotas. Es un polvo absorbente que se espolvorea directamente sobre la orina de perros o gatos. En contacto con el líquido, el polvo lo transforma en un gel sólido tipo arena aglomerada. El gel resultante se retira fácilmente con escoba y pala, dejando la zona seca y sin olor.
+P-sweep es un producto de limpieza para hogares con mascotas. Es un polvo absorbente que se espolvorea directamente sobre la orina de perros o gatos. En contacto con el líquido, el polvo lo transforma en un gel sólido tipo arena aglomerada. El gel resultante se retira fácilmente con escoba y pala, dejando la zona seca y sin olor.
 
 ## Cómo se usa (4 pasos)
 
-1. **Espolvorear.** Aplicar Psweep directamente sobre la orina hasta cubrirla.
+1. **Espolvorear.** Aplicar P-sweep directamente sobre la orina hasta cubrirla.
 2. **Esperar.** En aproximadamente 2 minutos el líquido se transforma en gel sólido.
 3. **Barrer.** Recoger el gel solidificado con escoba y pala.
 4. **Listo.** La zona queda seca, sin olor y lista para uso normal.
@@ -39,7 +39,7 @@ Psweep es un producto de limpieza para hogares con mascotas. Es un polvo absorbe
 ## Preguntas frecuentes
 
 ### ¿Sirve para perros y gatos?
-Sí. Psweep está diseñado para actuar sobre orina de mascotas, principalmente perros y gatos.
+Sí. P-sweep está diseñado para actuar sobre orina de mascotas, principalmente perros y gatos.
 
 ### ¿Cuánto tarda en hacer efecto?
 Actúa en pocos minutos (típicamente 2). El tiempo varía según la cantidad de líquido y la superficie.
@@ -48,16 +48,16 @@ Actúa en pocos minutos (típicamente 2). El tiempo varía según la cantidad de
 Lo suficiente para cubrir bien la zona húmeda; el polvo necesita contacto directo con el líquido para absorber y solidificar.
 
 ### ¿Reemplaza un desinfectante?
-No del todo. Psweep solidifica y retira la orina y mejora la higiene del área, pero para una desinfección profunda se puede complementar con un desinfectante habitual.
+No del todo. P-sweep solidifica y retira la orina y mejora la higiene del área, pero para una desinfección profunda se puede complementar con un desinfectante habitual.
 
 ### ¿Tiene acción antibacterial?
-Sí. Psweep tiene acción antibacterial y ayuda a mejorar la higiene de la zona tratada.
+Sí. P-sweep tiene acción antibacterial y ayuda a mejorar la higiene de la zona tratada.
 
 ### ¿Sirve en pisos, balcones y patios?
 Sí. Funciona sobre pisos cerámicos, cemento, balcones, patios y cuchas.
 
 ### ¿Después hay que limpiar igual?
-Psweep deja la zona seca y permite retirar la orina sólida; podés repasar con tu limpiador habitual si querés higiene más profunda.
+P-sweep deja la zona seca y permite retirar la orina sólida; podés repasar con tu limpiador habitual si querés higiene más profunda.
 
 ## Disponibilidad y compra
 
@@ -66,7 +66,7 @@ Psweep deja la zona seca y permite retirar la orina sólida; podés repasar con 
 - Compra online directa en la tienda oficial
 - Compra mayorista para pet shops, veterinarias, distribuidores, guarderías caninas, criaderos y peluquerías caninas
 
-## Para qué NO sirve Psweep
+## Para qué NO sirve P-sweep
 
 - No es un desinfectante completo (es complementario)
 - No está diseñado para superficies textiles delicadas como alfombras finas o tapizados
@@ -74,6 +74,6 @@ Psweep deja la zona seca y permite retirar la orina sólida; podés repasar con 
 
 ## Contacto comercial
 
-- Email: hola@psweep.com.ar
+- Email: hola@p-sweep.com.ar
 - Consultas mayoristas a través del mismo email
 - País de origen: Argentina (producto local)
